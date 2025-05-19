@@ -201,6 +201,29 @@ export function PricingSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
 
+  const tabs = [
+    { value: "video", label: "Video Editing", icon: "video" },
+    { value: "email", label: "Email Marketing", icon: "email" },
+    { value: "combined", label: "Combined Services", icon: "combined" }
+  ]
+
+  const handleTabChange = (newTab: string) => {
+    setActiveTab(newTab)
+  }
+
+  const getTabIcon = (tab: string) => {
+    switch (tab) {
+      case "video":
+        return "🎥"
+      case "email":
+        return "📧"
+      case "combined":
+        return "🔗"
+      default:
+        return ""
+    }
+  }
+
   const fadeInUpVariants = {
     hidden: { opacity: 0, y: 20 },
     visible: {
@@ -250,11 +273,67 @@ export function PricingSection() {
             className="w-full"
           >
             <div className="flex justify-center mb-12">
-              <TabsList className="grid grid-cols-3 w-full max-w-md">
-                <TabsTrigger value="video" className="text-sm md:text-base relative z-10 data-[state=active]:shadow-none">Video Editing</TabsTrigger>
-                <TabsTrigger value="email" className="text-sm md:text-base relative z-10 data-[state=active]:shadow-none">Email Marketing</TabsTrigger>
-                <TabsTrigger value="combined" className="text-sm md:text-base relative z-10 data-[state=active]:shadow-none">Combined Services</TabsTrigger>
-              </TabsList>
+              <div className="relative w-full max-w-md">
+                {/* Mobile view */}
+                <div className="hidden md:block">
+                  <TabsList className="grid grid-cols-3 w-full gap-0.5">
+                    {tabs.map((tab) => (
+                      <TabsTrigger
+                        key={tab.value}
+                        value={tab.value}
+                        className="text-sm md:text-base relative z-10 data-[state=active]:shadow-none"
+                      >
+                        {tab.label}
+                      </TabsTrigger>
+                    ))}
+                  </TabsList>
+                </div>
+
+                {/* Mobile navigation */}
+                <div className="block md:hidden">
+                  <div className="relative">
+                    <div className="flex items-center justify-between w-full p-3 bg-card rounded-xl shadow-lg border border-primary-hookx/10">
+                      <button
+                        onClick={() => {
+                          const currentIndex = tabs.findIndex(t => t.value === activeTab);
+                          const newIndex = (currentIndex - 1 + tabs.length) % tabs.length;
+                          setActiveTab(tabs[newIndex].value);
+                        }}
+                        className="p-2 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors flex items-center gap-2"
+                      >
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
+                        </svg>
+                        <span className="text-sm font-medium">Previous</span>
+                      </button>
+                      
+                      <div className="flex-1 text-center">
+                        <div className="flex flex-col items-center gap-1">
+                          <span className="text-xl font-bold text-primary-hookx">{getTabIcon(activeTab)}</span>
+                          <span className="text-sm font-medium">{tabs.find(t => t.value === activeTab)?.label}</span>
+                        </div>
+                      </div>
+                      
+                      <button
+                        onClick={() => {
+                          const currentIndex = tabs.findIndex(t => t.value === activeTab);
+                          const newIndex = (currentIndex + 1) % tabs.length;
+                          setActiveTab(tabs[newIndex].value);
+                        }}
+                        className="p-2 rounded-full hover:bg-accent hover:text-accent-foreground transition-colors flex items-center gap-2"
+                      >
+                        <span className="text-sm font-medium">Next</span>
+                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                          <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
+                        </svg>
+                      </button>
+                    </div>
+
+                    {/* Add a subtle gradient background */}
+                    <div className="absolute inset-0 rounded-xl bg-gradient-to-r from-primary-hookx/5 to-transparent" />
+                  </div>
+                </div>
+              </div>
             </div>
 
             {Object.entries(pricingOptions).map(([key, plans]) => (

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import { ScrollReset } from "@/components/scroll-reset";
+import { Analytics } from "@vercel/analytics/react";
 
 export const metadata: Metadata = {
   title: "HookX | Video Editing & Email Marketing Agency",

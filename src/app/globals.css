@@ -1,0 +1,130 @@
+@import url("./styles/satoshi.css");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+  :root {
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
+
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
+
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
+
+    --primary: 255 83% 67%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
+
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
+
+    --accent: 217.2 32.6% 17.5%;
+    --accent-foreground: 210 40% 98%;
+
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
+
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 255 83% 67%;
+
+    --radius: 0.5rem;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border scroll-smooth;
+  }
+  body {
+    @apply bg-background text-foreground font-['Satoshi'];
+  }
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-['Satoshi'] font-bold;
+  }
+  p, span, li, a {
+    @apply font-['Satoshi'];
+  }
+}
+
+/* Custom animations and effects */
+.glow-card {
+  @apply bg-card relative overflow-hidden;
+}
+
+.glow-card::before {
+  content: '';
+  @apply absolute inset-0 -z-10 bg-gradient-to-r from-primary-hookx/30 to-primary-hookx/10 opacity-0 transition-opacity duration-700;
+}
+
+.glow-card:hover::before {
+  @apply opacity-100;
+}
+
+.glow-button {
+  @apply relative overflow-hidden transition-all duration-300;
+}
+
+.glow-button::after {
+  content: '';
+  @apply absolute inset-0 -z-10 bg-primary-hookx/20 blur-xl opacity-0 transition-opacity duration-700;
+}
+
+.glow-button:hover::after {
+  @apply opacity-100;
+}
+
+.gradient-heading {
+  @apply bg-gradient-to-r from-primary-hookx to-blue-300 bg-clip-text text-transparent;
+}
+
+.animated-background {
+  background: linear-gradient(
+    -45deg,
+    rgba(0, 0, 0, 0.8),
+    rgba(10, 10, 20, 0.9),
+    rgba(5, 15, 35, 0.8),
+    rgba(0, 0, 0, 0.9)
+  );
+  background-size: 400% 400%;
+  animation: gradient 15s ease infinite;
+}
+
+@keyframes gradient {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Particles background animation */
+.particles-container {
+  @apply absolute inset-0 overflow-hidden -z-10;
+}
+
+.particle {
+  @apply absolute rounded-full bg-primary-hookx/30;
+  animation: float-particle 8s infinite ease-in-out;
+}
+
+@keyframes float-particle {
+  0%, 100% {
+    transform: translateY(0) translateX(0);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-20px) translateX(10px);
+    opacity: 0.6;
+  }
+}

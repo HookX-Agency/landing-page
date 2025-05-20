@@ -69,15 +69,15 @@ export function HowItWorks() {
           <div className="relative">
             {steps.map((step, index) => (
               <div key={step.number} className="relative py-16 first:pt-0 last:pb-0">
-                <div className="relative flex flex-col md:flex-row items-center justify-between my-10">
+                <div className="relative flex flex-col md:flex-row items-center justify-between my-4 md:my-10">
                   {/* Left Side (Steps 1 & 3) */}
                   {[1, 3].includes(step.number) && (
-                    <div className="w-full md:w-[45%] order-1">
+                    <div className="w-full md:w-[45%] order-1 mb-8 md:mb-0">
                       <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
                         transition={{ duration: 0.6, delay: index * 0.1 }}
-                        className="bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-primary-hookx/10 shadow-lg hover:shadow-xl transition-all duration-300"
+                        className="bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-primary-hookx/10 shadow-lg hover:shadow-xl transition-all duration-300 relative z-20"
                       >
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 rounded-full bg-primary-hookx/10 flex items-center justify-center text-primary-hookx font-bold text-sm">
@@ -85,13 +85,13 @@ export function HowItWorks() {
                           </div>
                           <h3 className="text-xl font-bold">{step.title}</h3>
                         </div>
-                        <p className="text-muted-foreground pl-11">{step.description}</p>
+                        <p className="text-muted-foreground md:pl-11">{step.description}</p>
                       </motion.div>
                     </div>
                   )}
 
-                  {/* Center Dot with Glow */}
-                  <div className="absolute left-1/2 -translate-x-1/2 w-16 h-full flex items-center justify-center z-10">
+                  {/* Center Dot with Glow - Hidden on mobile, visible on md and up */}
+                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-16 h-full items-center justify-center z-10">
                     <div className="relative w-8 h-8">
                       {/* Outer Glow */}
                       <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/80 to-primary-hookx/80 blur-md"></div>
@@ -104,12 +104,12 @@ export function HowItWorks() {
 
                   {/* Right Side (Steps 2 & 4) */}
                   {[2, 4].includes(step.number) && (
-                    <div className="w-full md:w-[45%] order-3 ml-auto">
+                    <div className="w-full md:w-[45%] order-3 md:ml-auto mt-12 md:mt-0">
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}
                         transition={{ duration: 0.6, delay: index * 0.1 }}
-                        className="bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-primary-hookx/10 shadow-lg hover:shadow-xl transition-all duration-300"
+                        className="bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-primary-hookx/10 shadow-lg hover:shadow-xl transition-all duration-300 relative z-20"
                       >
                         <div className="flex items-center gap-3 mb-3">
                           <div className="w-8 h-8 rounded-full bg-primary-hookx/10 flex items-center justify-center text-primary-hookx font-bold text-sm">
@@ -117,7 +117,7 @@ export function HowItWorks() {
                           </div>
                           <h3 className="text-xl font-bold">{step.title}</h3>
                         </div>
-                        <p className="text-muted-foreground pl-11">{step.description}</p>
+                        <p className="text-muted-foreground md:pl-11">{step.description}</p>
                       </motion.div>
                     </div>
                   )}

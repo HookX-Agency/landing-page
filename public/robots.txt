@@ -3,4 +3,4 @@ User-agent: *
 Allow: /
 
 # Sitemap location
-Sitemap: https://hookx.agency/sitemap.xml
+Sitemap: https://createhookx.com/sitemap.xml

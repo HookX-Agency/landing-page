@@ -68,11 +68,11 @@ export function HowItWorks() {
           {/* Steps */}
           <div className="relative">
             {steps.map((step, index) => (
-              <div key={step.number} className="relative py-16 first:pt-0 last:pb-0">
-                <div className="relative flex flex-col md:flex-row items-center justify-between my-4 md:my-10">
+              <div key={step.number} className="relative py-8 md:py-16 first:pt-0 last:pb-0">
+                <div className="relative flex flex-col md:flex-row items-center justify-between my-1 md:my-10">
                   {/* Left Side (Steps 1 & 3) */}
                   {[1, 3].includes(step.number) && (
-                    <div className="w-full md:w-[45%] order-1 mb-8 md:mb-0">
+                    <div className="w-full md:w-[45%] order-1 mb-4 md:mb-0">
                       <motion.div
                         initial={{ opacity: 0, x: -20 }}
                         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
@@ -104,7 +104,7 @@ export function HowItWorks() {
 
                   {/* Right Side (Steps 2 & 4) */}
                   {[2, 4].includes(step.number) && (
-                    <div className="w-full md:w-[45%] order-3 md:ml-auto mt-12 md:mt-0">
+                    <div className="w-full md:w-[45%] order-3 md:ml-auto mt-6 md:mt-0">
                       <motion.div
                         initial={{ opacity: 0, x: 20 }}
                         animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: 20 }}

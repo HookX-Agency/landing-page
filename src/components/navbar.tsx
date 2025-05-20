@@ -3,8 +3,8 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { motion } from "framer-motion";
+import { Menu, Info } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
@@ -58,14 +58,27 @@ export function Navbar() {
             HookX
           </span> */}
 
-          <Image
-            src="/HookX_Logo_Nav.png"
-            alt="HookX Logo"
-            width={384}
-            height={96}
-            className="h-12 w-auto"
-            priority
-          />
+          <div className="relative group">
+            <Image
+              src="/HookX_Logo_Nav.png"
+              alt="HookX Logo"
+              width={384}
+              height={96}
+              className="h-12 w-auto"
+              priority
+            />
+            <button 
+              className="absolute -right-5 -top-1 text-primary-hookx/70 hover:text-primary-hookx transition-colors"
+              aria-label="Pronunciation: Hooks"
+            >
+              <Info className="h-4 w-4" />
+              <div className="absolute left-1/2 -translate-x-1/2 top-full mt-2 hidden group-hover:block w-max">
+                <div className="bg-black/80 text-white text-xs px-2.5 py-1.5 rounded-md shadow-lg whitespace-nowrap">
+                  Pronounced 'Hooks' — not Hook-X
+                </div>
+              </div>
+            </button>
+          </div>
         </Link>
 
         {/* Desktop Nav */}

@@ -16,6 +16,10 @@ import {
 // FAQ data
 const faqItems = [
   {
+    question: "Why is it spelled 'HookX' but pronounced 'Hooks'?",
+    answer: "We chose 'HookX' as a creative spelling of 'Hooks' — the essential part of every great message. While it may look like 'Hook-X,' we pronounce it Hooks to reflect the clean, direct impact we bring to your brand. Think of it as your shortcut to memorable storytelling.",
+  },
+  {
     question: "What kind of content do you edit?",
     answer: "We specialize in editing a wide range of video content including YouTube videos, TikToks, Instagram Reels, promotional content, course videos, and more. Our team has experience with various styles from talking head videos to dynamic B-roll heavy content, product demos, and educational material.",
   },

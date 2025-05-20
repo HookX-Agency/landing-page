@@ -203,39 +203,44 @@ export function PricingSection() {
   // Credit Packages Data
   const creditPackages = [
     {
-      name: "Starter Pack",
+      name: "Starter",
       credits: 4,
       price: "$299",
-      validityPeriod: "2 months",
+      validityPeriod: "1 month",
       idealFor:
-        "Creators beginning to scale their content with focused video and email assets."
+        "Creators beginning to scale their content with focused video and email assets.",
+      isPopular: false
     },
     {
-      name: "Pro Pack",
+      name: "Growth",
       credits: 10,
-      price: "$749",
-      validityPeriod: "4 months",
+      price: "$699",
+      validityPeriod: "1 month",
       idealFor:
-        "Growing brands and creators delivering consistent quality content."
+        "Growing brands and creators delivering consistent quality content.",
+      isPopular: false
     },
     {
-      name: "Growth Pack",
+      name: "Pro",
       credits: 20,
-      price: "$1,499",
+      price: "$1,199",
+      validityPeriod: "3 months",
+      idealFor:
+        "Coaches, educators, and business leaders expanding their reach.",
+      isPopular: true
+    },
+    {
+      name: "Elite",
+      credits: 50,
+      price: "$2,499",
       validityPeriod: "6 months",
       idealFor:
-        "Coaches, educators, and business leaders expanding their reach."
-    },
-    {
-      name: "Scale Pack",
-      credits: 30,
-      price: "$2,199",
-      validityPeriod: "8 months",
-      idealFor:
-        "Agencies and established brands needing ongoing, diverse content production."
+        "Agencies and established brands needing ongoing, diverse content production.",
+      isPopular: false
     }
   ];
 
+  
   // Credit Value Data
   const creditValues = [
     { service: "Short-form video (reels, shorts)", credits: "1 Credit" },
@@ -270,70 +275,35 @@ export function PricingSection() {
           </motion.div>
         </div>
 
-        {/* Services for Credits Section */}
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6 }}
-          className="max-w-5xl mx-auto mb-16"
-        >
-          <div className="text-center mb-10">
-            <h3 className="text-2xl md:text-3xl font-bold text-primary-hookx mb-2">How to Use Credits</h3>
-            <p className="text-muted-foreground text-base max-w-2xl mx-auto">
-              Redeem your credits for any of our premium creative services.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {creditValues.map((item, idx) => (
-              <Card key={item.service} className="flex flex-col justify-between bg-card/30 border border-primary-hookx/10 shadow-xl p-6 h-full hover:shadow-2xl transition-shadow">
-                <CardHeader className="pb-2">
-                  <h4 className="text-xl font-bold text-white mb-1">{item.service}</h4>
-                </CardHeader>
-                <CardContent className="p-0">
-                  <div className="flex items-center gap-2 mb-3">
-                    <span className="text-lg font-bold text-primary-hookx">{item.credits}</span>
-                    <span className="text-muted-foreground text-base">per service</span>
-                  </div>
-                  <p className="text-muted-foreground text-sm">Use your credits to redeem this service at any time.</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </motion.section>
-
         {/* Credit Packages & Pricing Section */}
         <motion.section
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.2 }}
-          className="max-w-6xl mx-auto mb-16"
+          className="mb-10"
         >
           <div className="text-center mb-10">
             <h3 className="text-2xl md:text-3xl font-bold text-primary-hookx mb-2">Purchase Credits</h3>
             <p className="text-muted-foreground text-base max-w-2xl mx-auto">
               Select a credit package to unlock creative freedom. Credits can be redeemed for any service above.
             </p>
-            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-6">
-              <div className="flex items-center gap-2">
-                <Check className="h-5 w-5 text-primary-hookx shrink-0" />
-                <span className="text-base text-muted-foreground">Flexible allocation across services</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="h-5 w-5 text-primary-hookx shrink-0" />
-                <span className="text-base text-muted-foreground">Premium, strategic support</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <Check className="h-5 w-5 text-primary-hookx shrink-0" />
-                <span className="text-base text-muted-foreground">Strategy consultation</span>
-              </div>
-            </div>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {creditPackages.map((pkg, idx) => (
               <Card key={pkg.name} className="relative flex flex-col justify-between bg-card/30 border border-primary-hookx/10 shadow-xl p-6 h-full hover:shadow-2xl transition-shadow">
-                {/* Most Popular Badge */}
-                {pkg.name === "Pro Pack" && (
-                  <span className="absolute top-6 right-6 bg-primary-hookx text-white text-xs font-semibold px-3 py-1 rounded-full z-10 shadow">Most Popular</span>
+                {/* Premium Popular Badge */}
+                {pkg.isPopular && (
+                  <div className="absolute -top-3 right-6">
+                    <div className="relative">
+                      <div className="absolute -inset-1 bg-gradient-to-r from-purple-600 to-primary-hookx rounded-full blur-sm opacity-75 group-hover:opacity-100 transition duration-200"></div>
+                      <div className="relative flex items-center bg-gradient-to-r from-purple-500 to-primary-hookx text-white text-xs font-bold px-4 py-1.5 rounded-full z-10 shadow-lg">
+                        <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg">
+                          <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                        </svg>
+                        MOST POPULAR
+                      </div>
+                    </div>
+                  </div>
                 )}
                 <div>
                   <CardHeader className="pb-2">
@@ -352,35 +322,50 @@ export function PricingSection() {
                     </div>
                   </CardContent>
                 </div>
-                <div className="mt-auto pt-2">
-                  <Button className="w-full bg-primary-hookx hover:bg-primary-hookx/90 text-base py-3 rounded-lg shadow-lg">
-                    <Link href="/contact" className="flex items-center justify-center gap-2">
-                      Purchase Credits
-                      <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </div>
               </Card>
             ))}
           </div>
+          
+          {/* Benefits List */}
+          <div className="mt-6">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-4">
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary-hookx shrink-0" />
+                <span className="text-sm text-muted-foreground">Flexible allocation</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary-hookx shrink-0" />
+                <span className="text-sm text-muted-foreground">Premium support</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-4 w-4 text-primary-hookx shrink-0" />
+                <span className="text-sm text-muted-foreground">Strategy consultation</span>
+              </div>
+            </div>
+          </div>
         </motion.section>
 
-
-
-        {/* CTA Section */}
+        {/* Compact CTA Section */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
           transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
+          className="text-center mt-6"
         >
-          <p className="text-lg text-muted-foreground mb-4">
-            Ready to elevate your content with tailored creative solutions? Contact HookX today to find the perfect credit package for your brand.
+          <p className="text-lg text-muted-foreground mb-6 max-w-2xl mx-auto">
+            Secure your credits and start building your brand with HookX.
           </p>
-          <Button className="bg-primary-hookx hover:bg-primary-hookx/90 text-lg px-8 py-4 rounded-full shadow-lg">
-            <Link href="/contact" className="flex items-center justify-center gap-2">
-              Contact HookX
-              <ArrowRight className="h-5 w-5" />
+          <Button 
+            asChild
+            className="group relative overflow-hidden bg-gradient-to-r from-purple-600 to-primary-hookx hover:from-purple-600/90 hover:to-primary-hookx/90 text-lg px-10 py-6 rounded-full shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5"
+          >
+            <Link 
+              href="/book-call" 
+              className="flex items-center justify-center gap-3 font-bold text-lg"
+            >
+              <span className="relative z-10">Book Your Onboarding Call Now</span>
+              <ArrowRight className="h-5 w-5 transition-transform duration-300 group-hover:translate-x-2" />
+              <div className="absolute inset-0 bg-gradient-to-r from-white/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
             </Link>
           </Button>
         </motion.div>

@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import React, { useRef } from "react"
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight } from "lucide-react"
@@ -14,7 +14,32 @@ import {
 } from "@/components/ui/accordion"
 
 // FAQ data
+const creditValues = [
+  { service: "Short-form video (reels, shorts)", credits: "1 Credit" },
+  { service: "Email template (design + copy)", credits: "1 Credit" },
+  { service: "Thumbnail design", credits: "0.5 Credit" },
+  { service: "Long-form video (5-10 mins)", credits: "3-5 Credits" },
+  { service: "Strategy consultation", credits: "Included with any package" }
+];
+
 const faqItems = [
+  {
+    question: "How do I use my credits and what do they cover?",
+    answer: (
+      <>
+        <p className="mb-3">Your credits can be redeemed for any of our premium creative services. Here's a breakdown of how many credits each service requires:</p>
+        <ul className="space-y-2 mb-4">
+          {creditValues.map((item, index) => (
+            <li key={index} className="flex justify-between py-2 border-b border-gray-700">
+              <span>{item.service}</span>
+              <span className="font-medium text-primary-hookx">{item.credits}</span>
+            </li>
+          ))}
+        </ul>
+        <p>Credits never expire and can be used for any service in any combination. You can track your credit balance and usage through your client dashboard.</p>
+      </>
+    ),
+  },
   {
     question: "Why is it spelled 'HookX' but pronounced 'Hooks'?",
     answer: "We chose 'HookX' as a creative spelling of 'Hooks' — the essential part of every great message. While it may look like 'Hook-X,' we pronounce it Hooks to reflect the clean, direct impact we bring to your brand. Think of it as your shortcut to memorable storytelling.",
@@ -61,7 +86,7 @@ export function FAQSection() {
     <section
       ref={sectionRef}
       id="faq"
-      className="py-24 bg-gradient-to-b from-card/30 to-background"
+      className="pt-6 pb-24 bg-gradient-to-b from-card/30 to-background"
     >
       <div className="container">
         <div className="text-center mb-16">

@@ -1,9 +1,28 @@
 "use client"
 
-import React, { useRef } from "react"
+import React, { useRef, useEffect } from "react"
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
 import { ArrowRight } from "lucide-react"
+
+// Add ripple animation styles
+const rippleStyles = `
+  @keyframes ripple {
+    0% { opacity: 0; }
+    20% { opacity: 0.5; }
+    100% { opacity: 0.5; }
+  }
+  @keyframes rippleWave {
+    0% { transform: translate(-50%, -50%) scale(0); opacity: 1; }
+    100% { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+  }
+  .animate-ripple {
+    animation: ripple 4s infinite;
+  }
+  .animate-ripple-wave {
+    animation: rippleWave 2s infinite cubic-bezier(0.4, 0, 0.2, 1);
+  }
+`
 
 import { Button } from "@/components/ui/button"
 import {
@@ -24,6 +43,10 @@ const creditValues = [
 
 const faqItems = [
   {
+    question: "Why is it spelled 'HookX' but pronounced 'Hooks'?",
+    answer: "We chose 'HookX' as a creative spelling of 'Hooks' — the essential part of every great message. While it may look like 'Hook-X,' we pronounce it Hooks to reflect the clean, direct impact we bring to your brand. Think of it as your shortcut to memorable storytelling.",
+  },
+  {
     question: "How do I use my credits and what do they cover?",
     answer: (
       <>
@@ -39,10 +62,6 @@ const faqItems = [
         <p>Credits never expire and can be used for any service in any combination. You can track your credit balance and usage through your client dashboard.</p>
       </>
     ),
-  },
-  {
-    question: "Why is it spelled 'HookX' but pronounced 'Hooks'?",
-    answer: "We chose 'HookX' as a creative spelling of 'Hooks' — the essential part of every great message. While it may look like 'Hook-X,' we pronounce it Hooks to reflect the clean, direct impact we bring to your brand. Think of it as your shortcut to memorable storytelling.",
   },
   {
     question: "What kind of content do you edit?",
@@ -82,6 +101,16 @@ export function FAQSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
 
+  // Add ripple styles to document head
+  useEffect(() => {
+    const style = document.createElement('style')
+    style.innerHTML = rippleStyles
+    document.head.appendChild(style)
+    return () => {
+      document.head.removeChild(style)
+    }
+  }, [])
+
   return (
     <section
       ref={sectionRef}
@@ -111,15 +140,36 @@ export function FAQSection() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <Accordion type="single" collapsible className="space-y-4">
+            <Accordion type="single" collapsible className="space-y-4" defaultValue="item-0">
               {faqItems.map((item, index) => (
                 <AccordionItem
                   key={index}
                   value={`item-${index}`}
-                  className="border border-primary-hookx/10 rounded-lg overflow-hidden bg-card/30 backdrop-blur-sm"
+                  className={`relative border rounded-lg overflow-hidden backdrop-blur-sm transition-all duration-300 ${
+                    index === 0 
+                      ? 'border-primary-hookx/20 bg-gradient-to-r from-primary-hookx/5 to-primary-hookx/10 shadow-md shadow-primary-hookx/10' 
+                      : 'border-primary-hookx/10 bg-card/30 hover:bg-primary-hookx/5'
+                  }`}
                 >
-                  <AccordionTrigger className="px-6 hover:no-underline hover:bg-primary-hookx/5 transition-colors">
-                    <span className="text-left">{item.question}</span>
+                  {index === 0 && (
+                    <div className="absolute inset-0 overflow-hidden rounded-lg">
+                      <div className="absolute inset-0 bg-gradient-to-r from-primary-hookx/10 to-primary-hookx/5"></div>
+                      <div className="absolute inset-0 opacity-0 animate-ripple">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-1 bg-primary-hookx/20 rounded-full scale-0 animate-ripple-wave"></div>
+                      </div>
+                    </div>
+                  )}
+                  <AccordionTrigger 
+                    className={`relative z-10 px-6 py-4 hover:no-underline transition-all ${
+                      index === 0 ? 'hover:bg-primary-hookx/10' : ''
+                    }`}
+                  >
+                    <span className={`text-left font-medium ${index === 0 ? 'text-primary-hookx font-semibold' : ''}`}>
+                      {index === 0 && (
+                        <span className="inline-block w-2 h-2 rounded-full bg-primary-hookx mr-3"></span>
+                      )}
+                      {item.question}
+                    </span>
                   </AccordionTrigger>
                   <AccordionContent className="px-6 pb-6 text-muted-foreground">
                     {item.answer}

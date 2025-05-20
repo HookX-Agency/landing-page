@@ -91,7 +91,7 @@ export function HowItWorks() {
                   )}
 
                   {/* Center Dot with Glow - Hidden on mobile, visible on md and up */}
-                  <div className="hidden md:block absolute left-1/2 -translate-x-1/2 w-16 h-full items-center justify-center z-10">
+                  <div className="hidden md:block absolute left-1/2 -translate-x-1/4 w-16 h-1/2 items-center justify-center z-10">
                     <div className="relative w-8 h-8">
                       {/* Outer Glow */}
                       <div className="absolute inset-0 rounded-full bg-gradient-to-r from-purple-500/80 to-primary-hookx/80 blur-md"></div>

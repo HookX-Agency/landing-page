@@ -197,33 +197,59 @@ const pricingOptions = {
 }
 
 export function PricingSection() {
-  const [activeTab, setActiveTab] = useState("video")
-  const sectionRef = useRef<HTMLElement>(null)
-  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
+  const sectionRef = useRef<HTMLElement>(null);
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
 
-  const fadeInUpVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.5,
-      }
+  // Credit Packages Data
+  const creditPackages = [
+    {
+      name: "Starter Pack",
+      credits: 4,
+      price: "$299",
+      validityPeriod: "2 months",
+      idealFor:
+        "Creators beginning to scale their content with focused video and email assets."
     },
-    exit: {
-      opacity: 0,
-      y: -20,
-      transition: {
-        duration: 0.3,
-      }
+    {
+      name: "Pro Pack",
+      credits: 10,
+      price: "$749",
+      validityPeriod: "4 months",
+      idealFor:
+        "Growing brands and creators delivering consistent quality content."
+    },
+    {
+      name: "Growth Pack",
+      credits: 20,
+      price: "$1,499",
+      validityPeriod: "6 months",
+      idealFor:
+        "Coaches, educators, and business leaders expanding their reach."
+    },
+    {
+      name: "Scale Pack",
+      credits: 30,
+      price: "$2,199",
+      validityPeriod: "8 months",
+      idealFor:
+        "Agencies and established brands needing ongoing, diverse content production."
     }
-  }
+  ];
+
+  // Credit Value Data
+  const creditValues = [
+    { service: "Short-form video (reels, shorts)", credits: "1 Credit" },
+    { service: "Email template (design + copy)", credits: "1 Credit" },
+    { service: "Thumbnail design", credits: "0.5 Credit" },
+    { service: "Long-form video (5-10 mins)", credits: "3-5 Credits" },
+    { service: "Strategy consultation", credits: "Included with any package" }
+  ];
 
   return (
     <section
       ref={sectionRef}
       id="pricing"
-      className="py-24 bg-gradient-to-b from-background to-card/30"
+      className="py-24 bg-gradient-to-b from-card/30 to-background"
     >
       <div className="container">
         <div className="text-center mb-16">
@@ -232,136 +258,133 @@ export function PricingSection() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-sm uppercase tracking-widest text-primary-hookx mb-2">Pricing</p>
+            <p className="text-sm uppercase tracking-widest text-primary-hookx mb-2">
+              Pricing
+            </p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Flexible Pricing for Creators, Brands, and Founders
+              Credit-Based Pricing for Creative Freedom
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Choose the service that fits your goals — or combine both for even greater impact.
+              Experience premium flexibility—choose a credit package that aligns with your ambitions and invest in creative excellence on your own terms.
             </p>
           </motion.div>
         </div>
 
-        <div className="max-w-6xl mx-auto">
-          <Tabs
-            defaultValue="video"
-            value={activeTab}
-            onValueChange={setActiveTab}
-            className="w-full"
-          >
-            <div className="flex justify-center mb-12">
-              {/* Mobile arrow navigation */}
-              <div className="block md:hidden mt-2">
-                <div className="flex items-center justify-between w-full max-w-md p-2 bg-card rounded-lg shadow-sm">
-                  <button
-                    onClick={() => {
-                      const currentIndex = ["video", "email", "combined"].findIndex(t => t === activeTab)
-                      const newIndex = (currentIndex - 1 + 3) % 3
-                      setActiveTab(["video", "email", "combined"][newIndex])
-                    }}
-                    className="p-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M7.707 14.707a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 1.414L5.414 9H17a1 1 0 110 2H5.414l2.293 2.293a1 1 0 010 1.414z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                  
-                  <span className="text-sm font-medium">
-                    {activeTab === "video" ? "🎥 Video Editing" : 
-                     activeTab === "email" ? "📧 Email Marketing" : 
-                     "🔗 Combined Services"}
-                  </span>
-                  
-                  <button
-                    onClick={() => {
-                      const currentIndex = ["video", "email", "combined"].findIndex(t => t === activeTab)
-                      const newIndex = (currentIndex + 1) % 3
-                      setActiveTab(["video", "email", "combined"][newIndex])
-                    }}
-                    className="p-2 rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
-                      <path fillRule="evenodd" d="M12.293 5.293a1 1 0 011.414 0l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414-1.414L14.586 11H3a1 1 0 110-2h11.586l-2.293-2.293a1 1 0 010-1.414z" clipRule="evenodd" />
-                    </svg>
-                  </button>
-                </div>
+        {/* Services for Credits Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6 }}
+          className="max-w-5xl mx-auto mb-16"
+        >
+          <div className="text-center mb-10">
+            <h3 className="text-2xl md:text-3xl font-bold text-primary-hookx mb-2">How to Use Credits</h3>
+            <p className="text-muted-foreground text-base max-w-2xl mx-auto">
+              Redeem your credits for any of our premium creative services.
+            </p>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {creditValues.map((item, idx) => (
+              <Card key={item.service} className="flex flex-col justify-between bg-card/30 border border-primary-hookx/10 shadow-xl p-6 h-full hover:shadow-2xl transition-shadow">
+                <CardHeader className="pb-2">
+                  <h4 className="text-xl font-bold text-white mb-1">{item.service}</h4>
+                </CardHeader>
+                <CardContent className="p-0">
+                  <div className="flex items-center gap-2 mb-3">
+                    <span className="text-lg font-bold text-primary-hookx">{item.credits}</span>
+                    <span className="text-muted-foreground text-base">per service</span>
+                  </div>
+                  <p className="text-muted-foreground text-sm">Use your credits to redeem this service at any time.</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </motion.section>
+
+        {/* Credit Packages & Pricing Section */}
+        <motion.section
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+          className="max-w-6xl mx-auto mb-16"
+        >
+          <div className="text-center mb-10">
+            <h3 className="text-2xl md:text-3xl font-bold text-primary-hookx mb-2">Purchase Credits</h3>
+            <p className="text-muted-foreground text-base max-w-2xl mx-auto">
+              Select a credit package to unlock creative freedom. Credits can be redeemed for any service above.
+            </p>
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 mt-6">
+              <div className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-primary-hookx shrink-0" />
+                <span className="text-base text-muted-foreground">Flexible allocation across services</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-primary-hookx shrink-0" />
+                <span className="text-base text-muted-foreground">Premium, strategic support</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <Check className="h-5 w-5 text-primary-hookx shrink-0" />
+                <span className="text-base text-muted-foreground">Strategy consultation</span>
               </div>
             </div>
-
-            {Object.entries(pricingOptions).map(([key, plans]) => (
-              <TabsContent key={key} value={key} className="mt-0">
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={key}
-                    initial="hidden"
-                    animate="visible"
-                    exit="exit"
-                    variants={fadeInUpVariants}
-                    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
-                  >
-                    {plans.map((plan, index) => (
-                      <Card
-                        key={index}
-                        className={`glow-card h-full relative border ${
-                          plan.popular
-                            ? "border-primary-hookx/50 shadow-[0_0_15px_rgba(100,149,237,0.15)]"
-                            : "border-primary-hookx/10"
-                        } bg-card/30 backdrop-blur-sm`}
-                      >
-                        {plan.popular && (
-                          <div className="absolute top-4 right-4">
-                            <span className="bg-primary-hookx text-white text-xs font-medium px-3 py-1 rounded-full">
-                              Most Popular
-                            </span>
-                          </div>
-                        )}
-                        <CardHeader>
-                          <CardTitle>{plan.name}</CardTitle>
-                          <div className="mt-2">
-                            <span className="text-3xl font-bold">{plan.price}</span>
-                            <span className="text-muted-foreground">{plan.period}</span>
-                          </div>
-                          <CardDescription className="mt-2">{plan.description}</CardDescription>
-                        </CardHeader>
-                        <CardContent>
-                          <ul className="space-y-2">
-                            {plan.features.map((feature, featureIndex) => (
-                              <li key={featureIndex} className="flex items-start gap-2">
-                                <Check className="h-5 w-5 text-primary-hookx shrink-0 mt-0.5" />
-                                <span>{feature}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </CardContent>
-                        <CardFooter>
-                          <Button asChild className="w-full glow-button group">
-                            <Link href="https://calendly.com" target="_blank">
-                              Let&apos;s Talk
-                              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-                            </Link>
-                          </Button>
-                        </CardFooter>
-                      </Card>
-                    ))}
-                  </motion.div>
-                </AnimatePresence>
-              </TabsContent>
+          </div>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+            {creditPackages.map((pkg, idx) => (
+              <Card key={pkg.name} className="relative flex flex-col justify-between bg-card/30 border border-primary-hookx/10 shadow-xl p-6 h-full hover:shadow-2xl transition-shadow">
+                {/* Most Popular Badge */}
+                {pkg.name === "Pro Pack" && (
+                  <span className="absolute top-6 right-6 bg-primary-hookx text-white text-xs font-semibold px-3 py-1 rounded-full z-10 shadow">Most Popular</span>
+                )}
+                <div>
+                  <CardHeader className="pb-2">
+                    <h4 className="text-xl font-bold text-white mb-1">{pkg.name}</h4>
+                    <div className="flex items-end gap-2 mb-2">
+                      <span className="text-3xl font-extrabold text-primary-hookx">{pkg.credits}</span>
+                      <span className="text-base text-muted-foreground font-medium">Credits</span>
+                    </div>
+                    <div className="text-sm text-primary-hookx font-semibold mb-2">Valid for {pkg.validityPeriod}</div>
+                    <p className="text-muted-foreground text-sm mb-3 min-h-[48px]">{pkg.idealFor}</p>
+                  </CardHeader>
+                  <CardContent className="p-0">
+                    <div className="flex items-center gap-2 mb-3">
+                      <span className="text-lg font-bold text-primary-hookx">{pkg.price}</span>
+                      <span className="text-muted-foreground text-base">for this pack</span>
+                    </div>
+                  </CardContent>
+                </div>
+                <div className="mt-auto pt-2">
+                  <Button className="w-full bg-primary-hookx hover:bg-primary-hookx/90 text-base py-3 rounded-lg shadow-lg">
+                    <Link href="/contact" className="flex items-center justify-center gap-2">
+                      Purchase Credits
+                      <ArrowRight className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </Card>
             ))}
-          </Tabs>
-        </div>
+          </div>
+        </motion.section>
 
-        <div className="text-center mt-16">
-          <p className="text-muted-foreground max-w-xl mx-auto mb-6">
-            Need a custom solution? We offer tailored packages for enterprise clients and unique requirements.
+
+
+        {/* CTA Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.4 }}
+          className="text-center mt-16"
+        >
+          <p className="text-lg text-muted-foreground mb-4">
+            Ready to elevate your content with tailored creative solutions? Contact HookX today to find the perfect credit package for your brand.
           </p>
-          <Button asChild variant="outline" className="glow-button group">
-            <Link href="#contact">
-              Contact Us for Custom Pricing
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+          <Button className="bg-primary-hookx hover:bg-primary-hookx/90 text-lg px-8 py-4 rounded-full shadow-lg">
+            <Link href="/contact" className="flex items-center justify-center gap-2">
+              Contact HookX
+              <ArrowRight className="h-5 w-5" />
             </Link>
           </Button>
-        </div>
+        </motion.div>
       </div>
     </section>
-  )
+  );
 }

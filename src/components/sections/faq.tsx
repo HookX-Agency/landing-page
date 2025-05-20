@@ -45,7 +45,7 @@ const faqItems = [
   },
   {
     question: "What type of support do you provide?",
-    answer: "All our packages include dedicated support via email and our client portal. Higher-tier plans include regular strategy calls and more direct communication with your assigned editor or email marketing specialist. We pride ourselves on responsive, helpful customer service.",
+    answer: "All our packages include dedicated support via email and chat. Higher-tier plans include regular strategy calls and more direct communication with your assigned editor or email marketing specialist. We pride ourselves on responsive, helpful customer service.",
   },
 ]
 

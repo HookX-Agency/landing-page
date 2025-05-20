@@ -35,7 +35,7 @@ const services = [
   },
   {
     icon: <Mail className="h-12 w-12 text-primary-hookx" />,
-    title: "Email & SMS Marketing",
+    title: "Email Marketing",
     description: "Strategic campaigns that convert subscribers into customers while you sleep.",
     link: "#pricing",
     linkText: "View Pricing",

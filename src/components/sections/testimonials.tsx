@@ -13,15 +13,15 @@ const testimonials = [
   {
     id: 1,
     content: "HookX transformed my content strategy. Their video edits increased my engagement by 300% and their email campaigns consistently drive 5-figure product launches.",
-    author: "Alex Morgan",
+    author: "Alex Morgan [SAMPLE]",
     role: "Creator & Course Author",
     avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
     initials: "AM",
   },
-  {
+  { 
     id: 2,
     content: "Working with HookX has been game-changing for our brand. Their editing style perfectly captures our voice, and the email flows they set up have increased our conversion rate by 28%.",
-    author: "Michael Chen",
+    author: "Michael Chen [SAMPLE]",
     role: "E-commerce Brand Owner",
     avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
     initials: "MC",
@@ -29,7 +29,7 @@ const testimonials = [
   {
     id: 3,
     content: "Since partnering with HookX, my YouTube channel has grown from 5K to over 50K subscribers. Their edits keep viewers engaged and their email marketing has doubled my course sales.",
-    author: "Sophia Rodriguez",
+    author: "Sophia Rodriguez [SAMPLE]",
     role: "YouTube Educator",
     avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
     initials: "SR",
@@ -37,7 +37,7 @@ const testimonials = [
   {
     id: 4,
     content: "I tried multiple editors before finding HookX. Their attention to detail and understanding of what makes content perform is unmatched. My views and conversion rates speak for themselves.",
-    author: "James Wilson",
+    author: "James Wilson [SAMPLE]  ",
     role: "Tech Influencer",
     avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
     initials: "JW",
@@ -45,7 +45,7 @@ const testimonials = [
   {
     id: 5,
     content: "HookX delivers consistently excellent work that has helped grow my audience and boost my sales. They understand what works on each platform and optimize accordingly.",
-    author: "Emma Taylor",
+    author: "Emma Taylor [SAMPLE]",
     role: "Lifestyle Brand Founder",
     avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
     initials: "ET",

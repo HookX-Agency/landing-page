@@ -12,10 +12,12 @@ import Image from "next/image";
 
 const mainLinks = [
   { title: "Home", href: "/" },
+  { title: "Features", href: "#features" },
   { title: "Services", href: "#services" },
   { title: "Portfolio", href: "#portfolio" },
-  { title: "Pricing", href: "#pricing" },
   { title: "Testimonials", href: "#testimonials" },
+  { title: "How It Works", href: "#how-it-works" },
+  { title: "Pricing", href: "#pricing" },
   { title: "FAQ", href: "#faq" },
 ];
 

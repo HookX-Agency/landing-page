@@ -75,6 +75,11 @@ export function Footer() {
                     Testimonials
                   </Link>
                 </li>
+                <li>
+                  <Link href="/privacy-policy" className="hover:text-primary-hookx transition-colors">
+                    Privacy Policy
+                  </Link>
+                </li>
               </ul>
             </div>
             <div className="space-y-3">

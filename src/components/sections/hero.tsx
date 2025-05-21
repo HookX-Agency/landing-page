@@ -162,9 +162,9 @@ export function HeroSection() {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <p className="text-xl md:text-2xl text-white mb-8">
-              We're not just another video-editing agency, we're{' '}
+              We're not just another marketing agency, we're{' '}
               <img src="/hookx-logo.svg" alt="HookX Logo" className="inline h-8" />
-              {' '}& That's what we create.
+              {' '} & That's what we create.
             </p>
           </motion.div>
 

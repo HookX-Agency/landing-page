@@ -17,14 +17,14 @@ const portfolioItems = [
     title: "Visit the glory of Nepal",
     category: "Long-form",
     thumbnail: "https://i.ytimg.com/vi/6TENA_8Xr4I/maxresdefault.jpg",
-    videoUrl: "https://www.youtube.com/embed/6TENA_8Xr4I", // Replace with actual video
+    videoUrl: "https://www.youtube.com/embed/6TENA_8Xr4I",
   },
   {
     id: 2,
     title: "High conversion reels",
     category: "Reels",
-    thumbnail: "https://i.ytimg.com/vi/JG_BtoJ8wBg/maxresdefault.jpg",
-    videoUrl: "https://www.youtube.com/embed/AnhJ5cbV78c?feature=share", // Replace with actual video
+    thumbnail: "https://i.ytimg.com/vi/AnhJ5cbV78c/maxresdefault.jpg",
+    videoUrl: "https://www.youtube.com/embed/AnhJ5cbV78c?feature=share",
   },
   // {
   //   id: 5,
@@ -110,6 +110,7 @@ export function PortfolioSection() {
                             alt={item.title}
                             fill
                             className="object-cover transition-transform duration-500 group-hover:scale-105"
+                            unoptimized={true}
                           />
                         </AspectRatio>
                         <div className="absolute inset-0 bg-black/30 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">

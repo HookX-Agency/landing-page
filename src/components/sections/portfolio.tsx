@@ -21,24 +21,10 @@ const portfolioItems = [
   },
   {
     id: 2,
-    title: "Launch a new product",
-    category: "Ad",
-    thumbnail: "https://i.ytimg.com/vi/ttaQn32eYqE/maxresdefault.jpg",
-    videoUrl: "https://www.youtube.com/embed/ttaQn32eYqE", // Replace with actual video
-  },
-  {
-    id: 3,
     title: "High conversion reels",
     category: "Reels",
     thumbnail: "https://i.ytimg.com/vi/JG_BtoJ8wBg/maxresdefault.jpg",
-    videoUrl: "https://www.youtube.com/embed/JG_BtoJ8wBg?feature=share", // Replace with actual video
-  },
-  {
-    id: 4,
-    title: "Multi platform promotional reels",
-    category: "Reels",
-    thumbnail: "https://i.ytimg.com/vi/PGEblSIZfsc/maxresdefault.jpg",
-    videoUrl: "https://youtube.com/embed/PGEblSIZfsc?feature=share", // Replace with actual video
+    videoUrl: "https://www.youtube.com/embed/AnhJ5cbV78c?feature=share", // Replace with actual video
   },
   // {
   //   id: 5,

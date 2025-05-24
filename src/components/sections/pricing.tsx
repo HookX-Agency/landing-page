@@ -10,6 +10,20 @@ import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
 const pricingTiers = [
   {
+    name: "Not Sure?",
+    credits: 1,
+    price: "$99",
+    description: "Try our service with a sample edit",
+    validity: "One-time",
+    features: [
+      "1 credit",
+      "Perfect for first-time clients",
+      "Experience our quality",
+      "No commitment required",
+      "Option to upgrade later"
+    ]
+  },
+  {
     name: "Starter",
     credits: 3,
     price: "$299",
@@ -114,7 +128,7 @@ export function PricingSection() {
             variants={container}
             initial="hidden"
             animate={isInView ? "show" : "hidden"}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6"
           >
             {pricingTiers.map((tier) => (
               <motion.div key={tier.name} variants={item} className="h-full">
@@ -156,14 +170,29 @@ export function PricingSection() {
                       ))}
                     </ul>
                   </CardContent>
-                  <div className="p-6 pt-0">
-                    <Button className="w-full" size="lg">
-                      Get Started
-                    </Button>
-                  </div>
+
                 </Card>
               </motion.div>
             ))}
+          </motion.div>
+          <motion.div 
+            className="mt-12 text-center"
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ delay: 0.3, duration: 0.5 }}
+          >
+            <a 
+              href="https://calendly.com/createhookx/30min" 
+              target="_blank" 
+              rel="noopener noreferrer"
+            >
+              <Button size="lg" className="px-8 py-6 text-lg">
+                Book A Call
+              </Button>
+            </a>
+            <p className="mt-4 text-muted-foreground">
+              Have questions? Schedule a call with our team
+            </p>
           </motion.div>
         </Tabs>
       </div>

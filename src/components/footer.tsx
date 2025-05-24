@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { motion } from "framer-motion"
-import { ArrowUp, Mail, Instagram, Twitter, Youtube } from "lucide-react"
+import { ArrowUp, Mail, Instagram, Facebook, Linkedin } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -129,15 +129,15 @@ export function Footer() {
           {/* Social icons */}
           <div className="flex items-center gap-4">
             <Link
-              href="https://twitter.com"
+              href="https://www.facebook.com/createhookx"
               target="_blank"
               className="h-9 w-9 flex items-center justify-center rounded-full border border-border hover:border-primary-hookx hover:bg-primary-hookx/10 transition-colors"
             >
-              <Twitter className="h-4 w-4" />
-              <span className="sr-only">Twitter</span>
+              <Facebook className="h-4 w-4" />
+              <span className="sr-only">Facebook</span>
             </Link>
             <Link
-              href="https://instagram.com"
+              href="https://www.instagram.com/createhookx/"
               target="_blank"
               className="h-9 w-9 flex items-center justify-center rounded-full border border-border hover:border-primary-hookx hover:bg-primary-hookx/10 transition-colors"
             >
@@ -145,12 +145,12 @@ export function Footer() {
               <span className="sr-only">Instagram</span>
             </Link>
             <Link
-              href="https://youtube.com"
+              href="https://www.linkedin.com/company/create-hookx/"
               target="_blank"
               className="h-9 w-9 flex items-center justify-center rounded-full border border-border hover:border-primary-hookx hover:bg-primary-hookx/10 transition-colors"
             >
-              <Youtube className="h-4 w-4" />
-              <span className="sr-only">YouTube</span>
+              <Linkedin className="h-4 w-4" />
+              <span className="sr-only">LinkedIn</span>
             </Link>
             <Link
               href="mailto:createhookx@gmail.com"

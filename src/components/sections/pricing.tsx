@@ -1,6 +1,6 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import { motion, useInView } from "framer-motion"
 import { Check } from "lucide-react"
 
@@ -8,11 +8,38 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 
-const pricingTiers = [
+// Currency configuration with symbols and names
+const CURRENCIES = {
+  USD: { symbol: '$', name: 'US Dollar' },
+  EUR: { symbol: '€', name: 'Euro' },
+  GBP: { symbol: '£', name: 'British Pound' },
+  CAD: { symbol: 'C$', name: 'Canadian Dollar' },
+  AUD: { symbol: 'A$', name: 'Australian Dollar' },
+  AED: { symbol: 'د.إ', name: 'UAE Dirham' },
+  NPR: { symbol: 'रु', name: 'Nepalese Rupee' },
+  INR: { symbol: '₹', name: 'Indian Rupee' }
+} as const;
+
+// We'll rely on the API for all exchange rates
+// No fallback rates will be used
+
+type CurrencyCode = keyof typeof CURRENCIES;
+
+interface PriceTier {
+  name: string;
+  credits: number;
+  price: number;
+  description: string;
+  validity: string;
+  features: string[];
+  popular?: boolean;
+}
+
+const pricingTiers: PriceTier[] = [
   {
     name: "Not Sure?",
     credits: 1,
-    price: "$99",
+    price: 99,
     description: "Try our service with a sample edit",
     validity: "One-time",
     features: [
@@ -26,7 +53,7 @@ const pricingTiers = [
   {
     name: "Starter",
     credits: 3,
-    price: "$299",
+    price: 299,
     description: "New creators exploring premium video edits",
     validity: "24 Days",
     features: [
@@ -40,7 +67,7 @@ const pricingTiers = [
   {
     name: "Growth",
     credits: 7,
-    price: "$699",
+    price: 699,
     description: "Scaling creators building consistent video presence",
     validity: "1 Month",
     features: [
@@ -55,7 +82,7 @@ const pricingTiers = [
   {
     name: "Pro",
     credits: 15,
-    price: "$1,299",
+    price: 1299,
     description: "Coaches, educators expanding long-form branded content",
     validity: "2 Months",
     features: [
@@ -69,7 +96,7 @@ const pricingTiers = [
   {
     name: "Elite",
     credits: 30,
-    price: "$2,499",
+    price: 2499,
     description: "Brands/agencies managing high-volume video needs",
     validity: "3 Months",
     features: [
@@ -85,6 +112,69 @@ const pricingTiers = [
 export function PricingSection() {
   const sectionRef = useRef<HTMLElement>(null);
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 });
+  const [selectedCurrency, setSelectedCurrency] = useState<CurrencyCode>('USD');
+  const [exchangeRates, setExchangeRates] = useState<Record<string, number>>({});
+  const [isLoadingRates, setIsLoadingRates] = useState(true);
+
+  // Fetch latest exchange rates from a public API
+  useEffect(() => {
+    const fetchRates = async () => {
+      try {
+        // Using a free public API (no API key required)
+        const response = await fetch('https://api.exchangerate-api.com/v4/latest/USD');
+        const data = await response.json();
+        
+        if (data.rates) {
+          // Filter rates to only include the currencies we support
+          const supportedCurrencies = Object.keys(CURRENCIES);
+          const filteredRates: Record<string, number> = { USD: 1 }; // USD is always 1
+          
+          // Get rates for supported currencies from API
+          for (const [currency, rate] of Object.entries(data.rates)) {
+            if (supportedCurrencies.includes(currency) && currency !== 'USD') {
+              filteredRates[currency] = rate as number;
+            }
+          }
+          
+          // Only set rates if we got all the currencies we need
+          if (Object.keys(filteredRates).length === supportedCurrencies.length) {
+            setExchangeRates(filteredRates);
+            setIsLoadingRates(false);
+          } else {
+            throw new Error('Not all required currencies were available');
+          }
+        } else {
+          throw new Error('Invalid API response');
+        }
+      } catch (error) {
+        console.error('Failed to fetch exchange rates:', error);
+        // No fallback - just keep the loading state or previous rates
+        setIsLoadingRates(false);
+      }
+    };
+
+    // Initial fetch
+    fetchRates();
+    
+    // Refresh rates every hour
+    const interval = setInterval(fetchRates, 60 * 60 * 1000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
+  // Format price based on selected currency
+  const formatPrice = (price: number, currency: CurrencyCode) => {
+    const rate = exchangeRates[currency] || 1;
+    const convertedPrice = price * rate;
+    
+    // Format the number based on currency
+    return new Intl.NumberFormat(undefined, {
+      style: 'currency',
+      currency,
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    }).format(convertedPrice);
+  };
 
   const container = {
     hidden: { opacity: 0 },
@@ -115,12 +205,33 @@ export function PricingSection() {
           transition={{ duration: 0.5 }}
           className="text-center mb-12"
         >
-          <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
-            Flexible Credit-Based Pricing
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto mt-4">
-            Choose the package that fits your video editing needs
-          </p>
+          <div className="space-y-6">
+            <h2 className="text-3xl font-bold tracking-tight sm:text-4xl">
+              Flexible Credit-Based Pricing
+            </h2>
+            <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
+              Choose the package that fits your video editing needs
+            </p>
+            <div className="flex justify-center">
+              <div className="bg-muted rounded-lg p-1 inline-flex">
+                <select
+                  value={selectedCurrency}
+                  onChange={(e) => setSelectedCurrency(e.target.value as CurrencyCode)}
+                  className="bg-background text-foreground px-4 py-2 rounded-md border-0 focus:ring-2 focus:ring-primary-hookx focus:outline-none appearance-none"
+                  disabled={isLoadingRates}
+                >
+                  {Object.entries(CURRENCIES).map(([code, { name }]) => (
+                    <option key={code} value={code}>
+                      {code} - {name}
+                    </option>
+                  ))}
+                </select>
+              </div>
+            </div>
+            {isLoadingRates && (
+              <p className="text-sm text-muted-foreground">Loading exchange rates...</p>
+            )}
+          </div>
         </motion.div>
 
         <Tabs defaultValue="video" className="w-full">
@@ -156,8 +267,15 @@ export function PricingSection() {
                     </div>
                     <CardDescription className="h-12">{tier.description}</CardDescription>
                     <div className="mt-4">
-                      <span className="text-2xl font-bold">{tier.price}</span>
+                      <span className="text-2xl font-bold">
+                        {formatPrice(tier.price, selectedCurrency)}
+                      </span>
                       <span className="text-muted-foreground ml-2">for {tier.validity}</span>
+                      {selectedCurrency !== 'USD' && (
+                        <p className="text-xs text-muted-foreground mt-1">
+                          ≈ {formatPrice(tier.price, 'USD')}
+                        </p>
+                      )}
                     </div>
                   </CardHeader>
                   <CardContent className="flex-grow">
@@ -170,7 +288,6 @@ export function PricingSection() {
                       ))}
                     </ul>
                   </CardContent>
-
                 </Card>
               </motion.div>
             ))}

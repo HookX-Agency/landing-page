@@ -34,7 +34,7 @@ const portfolioItems = [
     title: "High Converting Reels",
     category: "Short-form",
     thumbnail: "https://i.ytimg.com/vi/4Kq2CX6LRAI/maxresdefault.jpg",
-    videoUrl: "https://youtube.com/shorts/4Kq2CX6LRAI?feature=share",
+    videoUrl: "https://www.youtube.com/embed/4Kq2CX6LRAI",
   },
   // {
   //   id: 6,
@@ -179,15 +179,26 @@ export function PortfolioSection() {
                       </CardContent>
                     </Card>
                   </DialogTrigger>
-                  <DialogContent className="sm:max-w-[600px] p-0 overflow-hidden bg-background border-none">
+                  <DialogContent className={`p-0 overflow-hidden bg-background border-none ${item.category === 'Short-form' ? 'max-w-[350px]' : 'sm:max-w-[800px]'}`}>
                     <AspectRatio ratio={getAspectRatio(item.category)}>
-                      <iframe
-                        className="w-full h-full"
-                        src={item.videoUrl}
-                        title={item.title}
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                        allowFullScreen
-                      />
+                      <div className="w-full h-full flex items-center justify-center bg-black">
+                        <div className={`${item.category === 'Short-form' ? 'w-full h-full' : 'w-full h-full'}`}>
+                          <iframe
+                            className="w-full h-full border-0"
+                            src={`${item.videoUrl}?autoplay=1&mute=0&enablejsapi=1&origin=${typeof window !== 'undefined' ? window.location.origin : ''}`}
+                            title={item.title}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                            frameBorder="0"
+                            style={{
+                              maxWidth: item.category === 'Short-form' ? '100%' : '100%',
+                              maxHeight: item.category === 'Short-form' ? 'calc(100vh - 2rem)' : '100%',
+                              margin: '0 auto',
+                              display: 'block'
+                            }}
+                          />
+                        </div>
+                      </div>
                     </AspectRatio>
                   </DialogContent>
                 </Dialog>

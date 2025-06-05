@@ -91,8 +91,8 @@ export function Footer() {
                   </Link>
                 </li>
                 <li>
-                  <Link href="mailto:createhookx@gmail.com" className="hover:text-primary-hookx transition-colors">
-                    createhookx@gmail.com
+                  <Link href="mailto:banshaj@createhookx.com" className="hover:text-primary-hookx transition-colors">
+                    banshaj@createhookx.com
                   </Link>
                 </li>
                 <li>
@@ -153,7 +153,7 @@ export function Footer() {
               <span className="sr-only">LinkedIn</span>
             </Link>
             <Link
-              href="mailto:createhookx@gmail.com"
+              href="mailto:banshaj@createhookx.com"
               className="h-9 w-9 flex items-center justify-center rounded-full border border-border hover:border-primary-hookx hover:bg-primary-hookx/10 transition-colors"
             >
               <Mail className="h-4 w-4" />

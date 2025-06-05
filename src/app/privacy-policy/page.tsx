@@ -94,7 +94,7 @@ export default function PrivacyPolicy() {
               <ListItem>Ask us to update, correct, or delete your information</ListItem>
               <ListItem>Withdraw consent for future communication</ListItem>
             </ul>
-            <p className="mt-4">To exercise your rights, contact us at: <a href="mailto:createhookx@gmail.com" className="text-[#765EEF] hover:underline">createhookx@gmail.com</a></p>
+            <p className="mt-4">To exercise your rights, contact us at: <a href="mailto:banshaj@createhookx.com" className="text-[#765EEF] hover:underline">banshaj@createhookx.com</a></p>
           </Section>
 
           <Section title="7. Policy Updates">
@@ -106,7 +106,7 @@ export default function PrivacyPolicy() {
             <div className="mt-4 p-4 bg-gray-50 rounded-lg">
               <p className="flex items-center text-gray-800">
                 <span className="mr-2">📩</span>
-                <a href="mailto:createhookx@gmail.com" className="text-[#765EEF] hover:underline">createhookx@gmail.com</a>
+                <a href="mailto:banshaj@createhookx.com" className="text-[#765EEF] hover:underline">banshaj@createhookx.com</a>
               </p>
             </div>
           </Section>

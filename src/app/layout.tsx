@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { ScrollReset } from "@/components/scroll-reset";
 import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const siteConfig = {
   name: 'HookX - Digital Marketing & Web Development Agency',
@@ -113,6 +114,7 @@ export default function RootLayout({
         <ScrollReset />
         {children}
         <Analytics />
+        <SpeedInsights />
         <script async type='text/javascript' src='https://static.klaviyo.com/onsite/js/klaviyo.js?company_id=TfKfhK' />
       </body>
     </html>

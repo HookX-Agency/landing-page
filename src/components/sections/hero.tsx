@@ -64,11 +64,11 @@ export function HeroSection() {
             transition={{ duration: 0.6 }}
             className="max-w-4xl mx-auto"
           >
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
-              We Turn Complex AI Into <span className="bg-gradient-to-r from-primary-hookx to-purple-500 bg-clip-text text-transparent">Clear, Powerful Videos.</span>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-5xl font-bold tracking-tight leading-tight">
+            You Build the AI, <span className="bg-gradient-to-r from-primary-hookx to-purple-500 bg-clip-text text-transparent">We Build the Audience</span>
             </h1>
             <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
-              For AI educators and product teams who want growth — not just content.
+            Your ideas, our edits — designed to convert across every platform.
             </p>
             <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
               <Button 

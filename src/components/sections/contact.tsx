@@ -1,19 +1,26 @@
 "use client"
 
-import { useRef, useState, useEffect } from "react"
-import Link from "next/link"
+import { useRef, useEffect, useState } from "react"
 import { motion, useInView } from "framer-motion"
-import { Calendar, ArrowRight, Mail, Send, CheckCircle2, Loader2, MessageSquare } from "lucide-react"
-
+import { Mail, CheckCircle2, Loader2, MessageSquare } from "lucide-react"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
-import { Label } from "@/components/ui/label"
+import { Card } from "@/components/ui/card"
+
+// Define Calendly types
+interface CalendlyInlineWidgetOptions {
+  url: string;
+  parentElement: HTMLElement | null;
+  prefill: Record<string, unknown>;
+  utm: Record<string, string>;
+}
+
+interface Calendly {
+  initInlineWidget: (options: CalendlyInlineWidgetOptions) => void;
+}
 
 declare global {
   interface Window {
-    Calendly: any;
+    Calendly?: Calendly;
   }
 }
 
@@ -23,33 +30,29 @@ export function ContactSection() {
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
   const [isCalendlyReady, setIsCalendlyReady] = useState(false)
 
-  // Load Calendly script and initialize widget
   useEffect(() => {
-    if (!isInView) return;
+    if (!isInView || typeof window === 'undefined') return;
 
     const loadCalendly = () => {
       if (window.Calendly) {
-        setIsCalendlyReady(true);
-        return;
+        setIsCalendlyReady(true)
+        return
       }
 
-      const script = document.createElement('script');
-      script.src = 'https://assets.calendly.com/assets/external/widget.js';
-      script.async = true;
-      script.onload = () => {
-        setIsCalendlyReady(true);
-      };
-      document.head.appendChild(script);
+      const script = document.createElement('script')
+      script.src = 'https://assets.calendly.com/assets/external/widget.js'
+      script.async = true
+      script.onload = () => setIsCalendlyReady(true)
+      document.head.appendChild(script)
 
       return () => {
-        document.head.removeChild(script);
-      };
-    };
+        document.head.removeChild(script)
+      }
+    }
 
-    loadCalendly();
-  }, [isInView]);
+    loadCalendly()
+  }, [isInView])
 
-  // Initialize Calendly widget when ready
   useEffect(() => {
     if (isCalendlyReady && calendlyRef.current) {
       window.Calendly?.initInlineWidget({
@@ -57,9 +60,9 @@ export function ContactSection() {
         parentElement: calendlyRef.current,
         prefill: {},
         utm: {}
-      });
+      })
     }
-  }, [isCalendlyReady]);
+  }, [isCalendlyReady])
 
   const containerVariants = {
     hidden: { opacity: 0 },

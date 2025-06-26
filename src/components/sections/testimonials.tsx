@@ -4,51 +4,46 @@ import { useRef } from "react"
 import Image from "next/image"
 import { motion, useInView } from "framer-motion"
 import { Quote } from "lucide-react"
+import { Star } from "lucide-react"
+import { ArrowRight } from "lucide-react"
+import { Button } from "@/components/ui/button"
+import Link from "next/link"
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Card, CardContent } from "@/components/ui/card"
 
 // Example testimonials
 const testimonials = [
   {
-    id: 1,
-    content: "HookX transformed my content strategy. Their video edits increased my engagement by 300% and their email campaigns consistently drive 5-figure product launches.",
-    author: "Alex Morgan [SAMPLE]",
-    role: "Creator & Course Author",
-    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=200&auto=format&fit=crop",
-    initials: "AM",
-  },
-  { 
-    id: 2,
-    content: "Working with HookX has been game-changing for our brand. Their editing style perfectly captures our voice, and the email flows they set up have increased our conversion rate by 28%.",
-    author: "Michael Chen [SAMPLE]",
-    role: "E-commerce Brand Owner",
-    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=200&auto=format&fit=crop",
-    initials: "MC",
+    name: "Alex Chen",
+    role: "AI Course Creator",
+    avatar: "/testimonials/alex-chen.jpg",
+    content:
+      "HookX transformed my technical AI tutorials into engaging content that actually keeps students watching. Our course completion rates increased by 40% after their edits.",
+    rating: 5,
   },
   {
-    id: 3,
-    content: "Since partnering with HookX, my YouTube channel has grown from 5K to over 50K subscribers. Their edits keep viewers engaged and their email marketing has doubled my course sales.",
-    author: "Sophia Rodriguez [SAMPLE]",
-    role: "YouTube Educator",
-    avatar: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?q=80&w=200&auto=format&fit=crop",
-    initials: "SR",
+    name: "Sarah Johnson",
+    role: "Head of Marketing, AI Startup",
+    avatar: "/testimonials/sarah-johnson.jpg",
+    content:
+      "Their ability to distill complex AI features into clear, compelling demos is unmatched. We've seen a 3x increase in demo signups since using their video content.",
+    rating: 5,
   },
   {
-    id: 4,
-    content: "I tried multiple editors before finding HookX. Their attention to detail and understanding of what makes content perform is unmatched. My views and conversion rates speak for themselves.",
-    author: "James Wilson [SAMPLE]  ",
-    role: "Tech Influencer",
-    avatar: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=200&auto=format&fit=crop",
-    initials: "JW",
+    name: "Dr. Michael Rodriguez",
+    role: "AI Researcher & Educator",
+    avatar: "/testimonials/michael-rodriguez.jpg",
+    content:
+      "As someone who's not naturally comfortable on camera, I was amazed at how HookX made my lectures engaging. The way they highlight key concepts with graphics is brilliant.",
+    rating: 5,
   },
   {
-    id: 5,
-    content: "HookX delivers consistently excellent work that has helped grow my audience and boost my sales. They understand what works on each platform and optimize accordingly.",
-    author: "Emma Taylor [SAMPLE]",
-    role: "Lifestyle Brand Founder",
-    avatar: "https://images.unsplash.com/photo-1580489944761-15a19d654956?q=80&w=200&auto=format&fit=crop",
-    initials: "ET",
+    name: "Priya Patel",
+    role: "CEO, AI Automation Platform",
+    avatar: "/testimonials/priya-patel.jpg",
+    content:
+      "We've tried multiple video editors, but HookX is the only one that truly understands how to showcase AI products. Our conversion rate on demo videos has never been higher.",
+    rating: 5,
   },
 ]
 
@@ -56,35 +51,18 @@ export function TestimonialsSection() {
   const sectionRef = useRef<HTMLElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
 
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    show: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  }
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    show: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: "easeOut",
-      }
-    },
-  }
-
   return (
     <section
       ref={sectionRef}
       id="testimonials"
-      className="py-24 bg-gradient-to-b from-card/30 to-background"
+      className="py-24 bg-gradient-to-b from-card/30 to-background relative overflow-hidden"
     >
-      <div className="container">
+      {/* Decorative elements */}
+      <div className="absolute inset-0 overflow-hidden opacity-20">
+        <div className="absolute -top-1/2 -left-1/2 w-[200%] h-[200%] bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-primary-hookx/20 via-background to-transparent"></div>
+      </div>
+
+      <div className="container relative z-10">
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -93,69 +71,67 @@ export function TestimonialsSection() {
           >
             <p className="text-sm uppercase tracking-widest text-primary-hookx mb-2">Testimonials</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Our Clients, In Their Own Words
+              Trusted by AI Educators & Builders
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              These are sample testimonials showcasing the type of results HookX can achieve for creators and brands.
+              Don't just take our word for it. Here's what our clients say about working with us.
             </p>
           </motion.div>
         </div>
 
-        <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "show" : "hidden"}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-        >
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-5xl mx-auto">
           {testimonials.map((testimonial, index) => (
             <motion.div
-              key={testimonial.id}
-              variants={itemVariants}
-              className={index === 0 ? "lg:col-span-2" : ""}
+              key={index}
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.5, delay: index * 0.1 }}
             >
-              <Card className="glow-card h-full border border-primary-hookx/10 bg-card/30 backdrop-blur-sm">
-                <CardContent className="p-6 flex flex-col h-full">
-                  <Quote className="h-8 w-8 text-primary-hookx/40 mb-4" />
-                  <p className="text-lg mb-6 flex-grow">
-                    "{testimonial.content}"
-                  </p>
-                  <div className="flex items-center gap-3">
-                    <Avatar>
-                      <AvatarImage src={testimonial.avatar} alt={testimonial.author} />
-                      <AvatarFallback>{testimonial.initials}</AvatarFallback>
-                    </Avatar>
+              <Card className="h-full border border-primary-hookx/10 bg-card/50 backdrop-blur-sm hover:border-primary-hookx/30 transition-colors">
+                <CardContent className="p-6">
+                  <div className="flex items-start gap-4 mb-4">
+                    <div className="relative h-14 w-14 flex-shrink-0 overflow-hidden rounded-full border-2 border-primary-hookx/20">
+                      <Image
+                        src={testimonial.avatar}
+                        alt={testimonial.name}
+                        fill
+                        className="object-cover"
+                      />
+                    </div>
                     <div>
-                      <p className="font-medium">{testimonial.author}</p>
+                      <h4 className="font-medium text-lg">{testimonial.name}</h4>
                       <p className="text-sm text-muted-foreground">{testimonial.role}</p>
+                      <div className="flex mt-1">
+                        {[...Array(5)].map((_, i) => (
+                          <Star key={i} className={`h-4 w-4 ${i < testimonial.rating ? 'text-yellow-400 fill-current' : 'text-muted-foreground/30'}`} />
+                        ))}
+                      </div>
                     </div>
                   </div>
+                  <blockquote className="text-muted-foreground italic relative pl-4 border-l-2 border-primary-hookx/30">
+                    "{testimonial.content}"
+                  </blockquote>
                 </CardContent>
               </Card>
             </motion.div>
           ))}
-        </motion.div>
+        </div>
 
-        {/* Optional video testimonial */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="mt-12 max-w-4xl mx-auto"
+        <motion.div 
+          className="text-center mt-16"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.4 }}
         >
-          <Card className="glow-card border border-primary-hookx/10 bg-card/30 backdrop-blur-sm overflow-hidden">
-            <CardContent className="p-0">
-              <div className="aspect-video relative">
-                {/* This would be a YouTube embed in production */}
-                <div className="absolute inset-0 flex items-center justify-center bg-black/10">
-                  <div className="text-center p-8">
-                    <Quote className="h-16 w-16 text-primary-hookx/60 mx-auto mb-4" />
-                    <h3 className="text-2xl font-medium mb-2">Hear from our clients</h3>
-                    <p className="text-muted-foreground">Video testimonial would be embedded here</p>
-                  </div>
-                </div>
-              </div>
-            </CardContent>
-          </Card>
+          <p className="text-lg text-muted-foreground mb-6">
+            Ready to join these happy clients?
+          </p>
+          <Button asChild size="lg" className="glow-button group">
+            <Link href="https://calendly.com/createhookx/30min" target="_blank">
+              Book a Strategy Call
+              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+            </Link>
+          </Button>
         </motion.div>
       </div>
     </section>

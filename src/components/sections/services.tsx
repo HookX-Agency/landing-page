@@ -3,57 +3,57 @@
 import { useRef } from "react"
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
-import { Video, Mail, ArrowRight, PenTool, Repeat, MessageSquare, Briefcase, LineChart, BarChart } from "lucide-react"
+import { GraduationCap, Youtube, Smartphone, Repeat, Cpu, Rocket, Mic, Settings, ArrowRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 
 const services = [
   {
-    icon: <Video className="h-12 w-12 text-primary-hookx" />,
-    title: "Video Editing",
-    description: "High-quality, engaging video content optimized for your platform and audience.",
+    icon: <GraduationCap className="h-12 w-12 text-primary-hookx" />,
+    title: "For AI Educators",
+    description: "Grow your audience, launch courses, and repurpose your best lectures with video that engages and educates.",
     link: "#pricing",
-    linkText: "View Pricing",
+    linkText: "View Educator Plans",
     features: [
       {
-        icon: <PenTool className="h-5 w-5 text-primary-hookx" />,
-        title: "Short & Long-form Content",
-        description: "From quick TikToks to in-depth YouTube content, edited for maximum engagement.",
+        icon: <Youtube className="h-5 w-5 text-primary-hookx" />,
+        title: "YouTube Growth Strategy",
+        description: "Full longform editing with thumbnails and CTAs",
+      },
+      {
+        icon: <Smartphone className="h-5 w-5 text-primary-hookx" />,
+        title: "Reels & Shorts",
+        description: "Short, hook-driven clips from lectures or AMAs",
       },
       {
         icon: <Repeat className="h-5 w-5 text-primary-hookx" />,
-        title: "Content Repurposing",
-        description: "Transform existing content into reels, shorts, and platform-optimized clips.",
-      },
-      {
-        icon: <MessageSquare className="h-5 w-5 text-primary-hookx" />,
-        title: "Captions & Graphics",
-        description: "Professional captions, motion graphics, and visual enhancements for all videos.",
+        title: "Course Repurposing",
+        description: "Turn lesson recordings into promo-ready social clips",
       },
     ],
   },
   {
-    icon: <Mail className="h-12 w-12 text-primary-hookx" />,
-    title: "Email Marketing",
-    description: "Strategic campaigns that convert subscribers into customers while you sleep.",
+    icon: <Cpu className="h-12 w-12 text-primary-hookx" />,
+    title: "For AI Product Companies",
+    description: "Turn product complexity into compelling clarity with demo reels, UI explainers, and platform walkthroughs.",
     link: "#pricing",
-    linkText: "View Pricing",
+    linkText: "View Startup Plans",
     features: [
       {
-        icon: <Briefcase className="h-5 w-5 text-primary-hookx" />,
-        title: "Klaviyo Flow Management",
-        description: "Automated flows and campaigns optimized for conversions and engagement.",
+        icon: <Rocket className="h-5 w-5 text-primary-hookx" />,
+        title: "Launch Video Pack",
+        description: "Product teaser, UI demo, and single-use-case clip",
       },
       {
-        icon: <LineChart className="h-5 w-5 text-primary-hookx" />,
-        title: "A/B Testing & Optimization",
-        description: "Data-driven testing to continuously improve open rates and conversions.",
+        icon: <Mic className="h-5 w-5 text-primary-hookx" />,
+        title: "Founder's Voice Edits",
+        description: "Zooms, interviews, or Looms turned into reels",
       },
       {
-        icon: <BarChart className="h-5 w-5 text-primary-hookx" />,
-        title: "Segmentation & Analytics",
-        description: "Strategic audience targeting and comprehensive performance reporting.",
+        icon: <Settings className="h-5 w-5 text-primary-hookx" />,
+        title: "Content Engine",
+        description: "Weekly content delivery aligned with product roadmap",
       },
     ],
   },
@@ -78,10 +78,10 @@ export function ServicesSection() {
           >
             <p className="text-sm uppercase tracking-widest text-primary-hookx mb-2">Our Services</p>
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Expert Solutions for Creators & Brands
+              What We Do Best
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              HookX exclusively offers Video Editing and Email & SMS Marketing — we focus on what we do best to deliver exceptional results.
+              Tailored video solutions for AI educators and product teams.
             </p>
           </motion.div>
         </div>
@@ -94,10 +94,12 @@ export function ServicesSection() {
               animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
               transition={{ duration: 0.7, delay: index * 0.2 }}
             >
-              <Card className="glow-card border border-primary-hookx/10 bg-card/30 backdrop-blur-sm h-full">
+              <Card className="glow-card border border-primary-hookx/10 bg-card/30 backdrop-blur-sm h-full hover:border-primary-hookx/30 transition-colors">
                 <CardHeader>
-                  <div className="mb-4">{service.icon}</div>
-                  <CardTitle className="text-2xl">{service.title}</CardTitle>
+                  <div className="flex items-center gap-4 mb-4">
+                    {service.icon}
+                    <h3 className="text-2xl font-bold">{service.title}</h3>
+                  </div>
                   <CardDescription className="text-base">{service.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -128,23 +130,6 @@ export function ServicesSection() {
             </motion.div>
           ))}
         </div>
-
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-          transition={{ duration: 0.6, delay: 0.4 }}
-          className="text-center mt-16"
-        >
-          <p className="text-lg mb-4 text-muted-foreground">
-            Interested in combining both services for maximum impact?
-          </p>
-          <Button asChild size="lg" className="glow-button group">
-            <Link href="#pricing">
-              View Combined Packages
-              <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </Button>
-        </motion.div>
       </div>
     </section>
   )

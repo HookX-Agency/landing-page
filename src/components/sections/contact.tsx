@@ -1,9 +1,9 @@
 "use client"
 
-import { useRef } from "react"
+import { useRef, useState, useEffect } from "react"
 import Link from "next/link"
 import { motion, useInView } from "framer-motion"
-import { Calendar, ArrowRight, Mail, Send } from "lucide-react"
+import { Calendar, ArrowRight, Mail, Send, CheckCircle2, Loader2, MessageSquare } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
@@ -11,20 +11,88 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { Label } from "@/components/ui/label"
 
+declare global {
+  interface Window {
+    Calendly: any;
+  }
+}
+
 export function ContactSection() {
   const sectionRef = useRef<HTMLElement>(null)
+  const calendlyRef = useRef<HTMLDivElement>(null)
   const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
+  const [isCalendlyReady, setIsCalendlyReady] = useState(false)
+
+  // Load Calendly script and initialize widget
+  useEffect(() => {
+    if (!isInView) return;
+
+    const loadCalendly = () => {
+      if (window.Calendly) {
+        setIsCalendlyReady(true);
+        return;
+      }
+
+      const script = document.createElement('script');
+      script.src = 'https://assets.calendly.com/assets/external/widget.js';
+      script.async = true;
+      script.onload = () => {
+        setIsCalendlyReady(true);
+      };
+      document.head.appendChild(script);
+
+      return () => {
+        document.head.removeChild(script);
+      };
+    };
+
+    loadCalendly();
+  }, [isInView]);
+
+  // Initialize Calendly widget when ready
+  useEffect(() => {
+    if (isCalendlyReady && calendlyRef.current) {
+      window.Calendly?.initInlineWidget({
+        url: 'https://calendly.com/createhookx/30min?hide_gdpr_banner=1&primary_color=765eef',
+        parentElement: calendlyRef.current,
+        prefill: {},
+        utm: {}
+      });
+    }
+  }, [isCalendlyReady]);
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1,
+      },
+    },
+  }
+
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    show: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: "easeOut",
+      },
+    },
+  }
 
   return (
     <section
       ref={sectionRef}
       id="contact"
-      className="py-24 bg-gradient-to-b from-background to-card/30 relative overflow-hidden"
+      className="py-24 bg-gradient-to-b from-card/30 to-background relative overflow-hidden"
     >
-      {/* Background elements */}
-      <div className="absolute inset-0 -z-10 opacity-10">
-        <div className="absolute -top-[20%] -right-[10%] w-[40%] h-[70%] rounded-full bg-primary-hookx/20 blur-3xl" />
-        <div className="absolute bottom-[10%] -left-[10%] w-[50%] h-[50%] rounded-full bg-primary-hookx/30 blur-3xl" />
+      {/* Decorative elements */}
+      <div className="absolute inset-0 overflow-hidden">
+        <div className="absolute -top-1/2 -left-1/2 w-full h-full bg-gradient-radial from-primary-hookx/5 to-transparent"></div>
+        <div className="absolute -bottom-1/2 -right-1/2 w-full h-full bg-gradient-radial from-primary-hookx/5 to-transparent"></div>
       </div>
 
       <div className="container relative z-10">
@@ -34,57 +102,92 @@ export function ContactSection() {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.6 }}
           >
-            <p className="text-sm uppercase tracking-widest text-primary-hookx mb-2">Contact Us</p>
-            <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-heading">
-              Let&apos;s Create Something Bold
+            <p className="text-sm uppercase tracking-widest text-primary-hookx mb-2">Get Started</p>
+            <h2 className="text-3xl md:text-4xl font-bold mb-4">
+              Ready to Transform Your AI Content?
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Book a free strategy call to see how HookX can help you grow through engaging content and strategic marketing.
+              Book a call to discuss your project and get a free content strategy session.
             </p>
           </motion.div>
         </div>
 
-        <div className="max-w-5xl mx-auto">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.8 }}
+        <motion.div 
+          className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center"
+          variants={containerVariants}
+          initial="hidden"
+          animate={isInView ? "show" : "hidden"}
+        >
+          <motion.div 
+            className="bg-card/50 backdrop-blur-sm border border-primary-hookx/10 rounded-2xl p-8 lg:p-10"
+            variants={itemVariants}
           >
-            <Card className="glow-card h-full border border-primary-hookx/10 bg-card/30 backdrop-blur-sm">
-              <CardHeader>
-                <div className="mb-4">
-                  <Calendar className="h-10 w-10 text-primary-hookx" />
+            <h3 className="text-2xl font-bold mb-6">Book a Strategy Call</h3>
+            
+            <div className="space-y-6">
+              <div>
+                <h4 className="font-medium mb-2">What to expect:</h4>
+                <ul className="space-y-2 text-muted-foreground">
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-primary-hookx mt-0.5 flex-shrink-0" />
+                    <span>15-minute discovery call</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-primary-hookx mt-0.5 flex-shrink-0" />
+                    <span>Content strategy assessment</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-primary-hookx mt-0.5 flex-shrink-0" />
+                    <span>Customized recommendations</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <CheckCircle2 className="h-5 w-5 text-primary-hookx mt-0.5 flex-shrink-0" />
+                    <span>No obligation quote</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div className="pt-4 border-t border-primary-hookx/10">
+                <h4 className="font-medium mb-3">Prefer email?</h4>
+                <div className="flex flex-col sm:flex-row gap-3">
+                  <Button asChild variant="outline" className="border-primary-hookx/30 hover:bg-primary-hookx/5">
+                    <a href="mailto:banshaj@createhookx.com">
+                      <Mail className="mr-2 h-4 w-4" />
+                      banshaj@createhookx.com
+                    </a>
+                  </Button>
                 </div>
-                <CardTitle className="text-2xl">Schedule Your Strategy Call</CardTitle>
-                <CardDescription className="text-base">
-                  Discover how HookX can help you grow through strategic content and marketing
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
-                  <div className="text-center">
-                    <p className="text-xl font-bold text-primary-hookx mb-4">
-                      Ready to Grow Your Business?
-                    </p>
-                    <p className="text-lg text-muted-foreground">
-                      Book your 30-minute strategy call now
-                    </p>
-                  </div>
-                  <div className="relative">
-                    <iframe
-                      src="https://calendly.com/createhookx/30min"
-                      width="100%"
-                      height="600"
-                      frameBorder="0"
-                      title="Calendly Booking"
-                      className="rounded-lg border border-primary-hookx/10"
-                    />
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
+              </div>
+            </div>
           </motion.div>
-        </div>
+
+          <motion.div 
+            className="bg-card/50 backdrop-blur-sm border border-primary-hookx/10 rounded-2xl overflow-hidden h-[600px] min-h-[500px]"
+            variants={itemVariants}
+            ref={calendlyRef}
+          >
+            {!isCalendlyReady && (
+              <div className="h-full flex items-center justify-center bg-muted/30">
+                <div className="text-center p-8">
+                  <Loader2 className="h-8 w-8 animate-spin text-primary-hookx mx-auto mb-4" />
+                  <p className="text-muted-foreground">Loading scheduling tool...</p>
+                </div>
+              </div>
+            )}
+          </motion.div>
+        </motion.div>
+
+        <motion.div 
+          className="mt-16 text-center"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ delay: 0.4 }}
+        >
+          <div className="inline-flex items-center gap-4 px-6 py-3 bg-primary-hookx/5 rounded-full">
+            <MessageSquare className="h-5 w-5 text-primary-hookx" />
+            <span className="text-sm font-medium">Questions? Email us at <a href="mailto:banshaj@createhookx.com" className="text-primary-hookx hover:underline">banshaj@createhookx.com</a></span>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

@@ -2,33 +2,33 @@
 
 import { useRef } from "react"
 import { motion, useInView } from "framer-motion"
-import { Video, Mail, LineChart, Zap } from "lucide-react"
+import { Video, BookOpen, TrendingUp, Zap } from "lucide-react"
 
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 
 const features = [
   {
     icon: <Video className="h-10 w-10 text-primary-hookx" />,
-    title: "High-converting Video Edits",
-    description: "Professional video content optimized for engagement and conversions across all platforms and formats.",
+    title: "Narrative-Led Editing",
+    description: "We don't just cut clips — we craft a clear story that simplifies your AI product or lesson for the audience you're targeting.",
     delay: 0,
   },
   {
-    icon: <Mail className="h-10 w-10 text-primary-hookx" />,
-    title: "Email Campaigns That Sell",
-    description: "Strategic email and SMS marketing that drives sales while you sleep, with proven conversion tactics.",
+    icon: <BookOpen className="h-10 w-10 text-primary-hookx" />,
+    title: "Niche-Specific Strategy",
+    description: "From technical demos to educational reels, we edit with a deep understanding of AI tooling, trends, and educator psychology.",
     delay: 0.1,
   },
   {
-    icon: <LineChart className="h-10 w-10 text-primary-hookx" />,
-    title: "Strategy + Execution = Growth",
-    description: "Data-driven strategy combined with skilled execution to achieve measurable growth for creators and brands.",
+    icon: <TrendingUp className="h-10 w-10 text-primary-hookx" />,
+    title: "Built for Growth",
+    description: "Every video is optimized for virality, clarity, and call-to-action placement. This isn't content for content's sake — it's content that converts.",
     delay: 0.2,
   },
   {
     icon: <Zap className="h-10 w-10 text-primary-hookx" />,
-    title: "Fast Turnarounds & Collaboration",
-    description: "Quick delivery with personal attention ensures your content and campaigns are always on schedule.",
+    title: "Credit System = Speed",
+    description: "Fast-paced startup? Teaching weekly? Our credit system gives you fast, flexible delivery without bloated retainers.",
     delay: 0.3,
   },
 ]
@@ -73,11 +73,10 @@ export function FeaturesSection() {
             transition={{ duration: 0.6 }}
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 gradient-heading">
-              Fuel Your Growth with HookX
+              What Makes HookX Different
             </h2>
             <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-              Our core services designed to help creators and brands achieve rapid, sustainable growth
-              through engaging content and strategic marketing.
+              Strategic video editing tailored specifically for AI educators and product teams.
             </p>
           </motion.div>
         </div>
@@ -90,7 +89,7 @@ export function FeaturesSection() {
         >
           {features.map((feature, index) => (
             <motion.div key={index} variants={itemVariants}>
-              <Card className="glow-card h-full border border-primary-hookx/10 bg-card/50 backdrop-blur-sm">
+              <Card className="glow-card h-full border border-primary-hookx/10 bg-card/50 backdrop-blur-sm hover:border-primary-hookx/30 transition-colors">
                 <CardHeader className="pb-2">
                   <div className="mb-4">{feature.icon}</div>
                   <CardTitle className="text-xl">{feature.title}</CardTitle>

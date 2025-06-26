@@ -1,27 +1,25 @@
 "use client"
 
-import { useEffect, useState } from "react"
-import Link from "next/link"
-import { motion } from "framer-motion";
-import { Star } from "lucide-react";
-import { ArrowRight } from "lucide-react"
+import { useEffect, useState, useRef } from "react"
+import { motion, useInView } from "framer-motion"
+import { ArrowRight, ChevronDown } from "lucide-react"
+import Image from "next/image"
 
 import { Button } from "@/components/ui/button"
 
 export function HeroSection() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
+  const sectionRef = useRef<HTMLElement>(null)
+  const isInView = useInView(sectionRef, { once: true, amount: 0.1 })
 
   // Track mouse position for dynamic glow effect
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
+    const handleMouseMove = (e: MouseEvent) => {
       setMousePosition({ x: e.clientX, y: e.clientY })
     }
 
-    window.addEventListener("mousemove", updateMousePosition)
-
-    return () => {
-      window.removeEventListener("mousemove", updateMousePosition)
-    }
+    window.addEventListener('mousemove', handleMouseMove)
+    return () => window.removeEventListener('mousemove', handleMouseMove)
   }, [])
 
   // Generate particles for background
@@ -35,159 +33,124 @@ export function HeroSection() {
   }))
 
   return (
-    <section className="relative min-h-screen flex items-center overflow-hidden animated-background">
-      {/* Animated background particles */}
-      <div className="particles-container">
-        {particles.map((particle) => (
-          <motion.div
-            key={particle.id}
-            className="particle"
-            style={{
-              width: particle.size,
-              height: particle.size,
-              left: particle.left,
-              top: particle.top,
-              opacity: 0.1,
-            }}
-            animate={{
-              y: [0, -30, 0],
-              x: [0, 15, 0],
-              opacity: [0.1, 0.3, 0.1],
-              scale: [1, 1.1, 1],
-            }}
-            transition={{
-              duration: particle.duration,
-              repeat: Number.POSITIVE_INFINITY,
-              delay: particle.delay,
-              ease: "easeInOut",
-            }}
-          />
-        ))}
+    <section 
+      ref={sectionRef}
+      className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20 md:pt-24"
+    >
+      {/* Background elements */}
+      <div className="absolute inset-0 -z-10">
+        <div className="absolute inset-0 bg-gradient-to-b from-background to-background/80" />
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,var(--tw-gradient-stops))] from-primary-hookx/5 via-background/0 to-background/80" />
+        <div className="absolute inset-0 bg-[url('/grid.svg')] bg-center [mask-image:linear-gradient(to_bottom,transparent,black_70%)]" />
+        
+        {/* Interactive glow overlay */}
+        <div
+          className="absolute inset-0 pointer-events-none"
+          style={{
+            background: `radial-gradient(
+              600px circle at ${mousePosition.x}px ${mousePosition.y}px,
+              rgba(118, 94, 239, 0.15),
+              transparent 40%
+            )`,
+          }}
+        />
       </div>
 
-      {/* Interactive glow overlay */}
-      <div
-        className="absolute inset-0 pointer-events-none"
-        style={{
-          background: `radial-gradient(
-            600px circle at ${mousePosition.x}px ${mousePosition.y}px,
-            rgba(100, 149, 237, 0.1),
-            transparent 40%
-          )`,
-        }}
-      />
-
-      <div className="container relative z-10 pt-8">
-        <div className="max-w-3xl mx-auto text-center">
+      <div className="container relative z-10 px-4 sm:px-6 lg:px-8">
+        <div className="text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="mb-8"
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.6 }}
+            className="max-w-4xl mx-auto"
           >
-            <div className="flex items-center justify-center gap-1">
-              <div className="flex">
-                <motion.img
-                  src="/clients-social-proof/client-1.jpg"
-                  alt="Client 1"
-                  className="w-12 h-12 rounded-full object-cover hover:shadow-lg transition-all duration-300 -ml-3"
-                  whileHover={{ scale: 1.2, y: -10 }}
-                />
-                <motion.img
-                  src="/clients-social-proof/client-2.jpg"
-                  alt="Client 2"
-                  className="w-12 h-12 rounded-full object-cover hover:shadow-lg transition-all duration-300 -ml-3"
-                  whileHover={{ scale: 1.2, y: -10 }}
-                />
-                <motion.img
-                  src="/clients-social-proof/client-3.jpg"
-                  alt="Client 3"
-                  className="w-12 h-12 rounded-full object-cover hover:shadow-lg transition-all duration-300 -ml-3"
-                  whileHover={{ scale: 1.2, y: -10 }}
-                />
-                <motion.img
-                  src="/clients-social-proof/client-4.jpg"
-                  alt="Client 4"
-                  className="w-12 h-12 rounded-full object-cover hover:shadow-lg transition-all duration-300 -ml-3"
-                  whileHover={{ scale: 1.2, y: -10 }}
-                />
-                <motion.img
-                  src="/clients-social-proof/client-5.jpg"
-                  alt="Client 5"
-                  className="w-12 h-12 rounded-full object-cover hover:shadow-lg transition-all duration-300 -ml-3"
-                  whileHover={{ scale: 1.2, y: -10 }}
-                />
-              </div>
-              <div className="flex flex-col items-start">
-                <div className="flex items-center gap-0.5">
-                  <motion.div whileHover={{ scale: 1.2 }} className="relative">
-                    <Star className="h-4 w-4 fill-white" />
-                    <div className="absolute inset-0 bg-white/20 blur-sm rounded-full" />
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.2 }} className="relative">
-                    <Star className="h-4 w-4 fill-white" />
-                    <div className="absolute inset-0 bg-white/20 blur-sm rounded-full" />
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.2 }} className="relative">
-                    <Star className="h-4 w-4 fill-white" />
-                    <div className="absolute inset-0 bg-white/20 blur-sm rounded-full" />
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.2 }} className="relative">
-                    <Star className="h-4 w-4 fill-white" />
-                    <div className="absolute inset-0 bg-white/20 blur-sm rounded-full" />
-                  </motion.div>
-                  <motion.div whileHover={{ scale: 1.2 }} className="relative">
-                    <Star className="h-4 w-4 fill-white" />
-                    <div className="absolute inset-0 bg-white/20 blur-sm rounded-full" />
-                  </motion.div>
-                </div>
-                <p className="text-sm text-white font-semibold mt-0.5">We create what we are!</p>
-              </div>
+            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-tight">
+              We Turn Complex AI Into <span className="bg-gradient-to-r from-primary-hookx to-purple-500 bg-clip-text text-transparent">Clear, Powerful Videos.</span>
+            </h1>
+            <p className="mt-6 text-lg md:text-xl text-muted-foreground max-w-2xl mx-auto">
+              For AI educators and product teams who want growth — not just content.
+            </p>
+            <div className="mt-10 flex flex-col sm:flex-row items-center justify-center gap-4">
+              <Button 
+                asChild 
+                size="lg" 
+                className="glow-button group px-8 py-6 text-base font-medium"
+              >
+                <a href="https://calendly.com/createhookx/30min" target="_blank" rel="noopener noreferrer">
+                  Let's Build Your Narrative
+                  <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+                </a>
+              </Button>
+              <Button 
+                asChild 
+                variant="outline" 
+                size="lg" 
+                className="border-primary-hookx/30 hover:bg-primary-hookx/5 px-8 py-6 text-base font-medium group"
+              >
+                <a href="#portfolio">
+                  See What We Do
+                  <ChevronDown className="ml-2 h-4 w-4 transition-transform group-hover:translate-y-1" />
+                </a>
+              </Button>
             </div>
           </motion.div>
 
-          <motion.div
+          {/* Social proof section */}
+          <motion.div 
+            className="mt-16"
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ delay: 0.2, duration: 0.6 }}
           >
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight gradient-heading" style={{ lineHeight: 1.5 }}>
-              Creating content that converts.
-            </h1>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.2 }}
-          >
-            <p className="text-xl md:text-2xl text-white mb-8">
-              We're not just another marketing agency, we're{' '}
-              <img src="/hookx-logo.svg" alt="HookX Logo" className="inline h-8" />
-              {' '} & That's what we create.
-            </p>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center items-center"
-          >
-            <Button asChild size="lg" className="glow-button group">
-              <Link href="https://calendly.com/createhookx/30min" target="_blank">
-                Let&apos;s Talk
-                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
-              </Link>
-            </Button>
-            <Button asChild variant="outline" size="lg">
-              <Link href="#services">
-                Our Services
-              </Link>
-            </Button>
+            <p className="text-sm text-muted-foreground mb-4">TRUSTED BY AI INNOVATORS AT</p>
+            <div className="flex flex-wrap items-center justify-center gap-8 opacity-70 hover:opacity-100 transition-opacity">
+              {[
+                { name: 'OpenAI', logo: '/logos/openai.svg' },
+                { name: 'Anthropic', logo: '/logos/anthropic.svg' },
+                { name: 'Stability AI', logo: '/logos/stability.svg' },
+                { name: 'Midjourney', logo: '/logos/midjourney.svg' },
+                { name: 'Hugging Face', logo: '/logos/huggingface.svg' },
+              ].map((company) => (
+                <div key={company.name} className="h-8 w-auto">
+                  <Image
+                    src={company.logo}
+                    alt={company.name}
+                    width={120}
+                    height={32}
+                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all"
+                  />
+                </div>
+              ))}
+            </div>
           </motion.div>
         </div>
+      </div>
 
+      {/* Scroll indicator */}
+      <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
+        <motion.div
+          animate={{
+            y: [0, 10, 0],
+          }}
+          transition={{
+            duration: 2,
+            repeat: Infinity,
+            ease: "easeInOut",
+          }}
+          className="w-8 h-12 border-2 border-primary-hookx/30 rounded-full flex justify-center p-1"
+        >
+          <motion.div
+            className="w-1 h-2 bg-primary-hookx rounded-full"
+            animate={{
+              y: [0, 10, 0],
+            }}
+            transition={{
+              duration: 2,
+              repeat: Infinity,
+              ease: "easeInOut",
+            }}
+          />
+        </motion.div>
       </div>
     </section>
   )

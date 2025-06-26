@@ -100,27 +100,42 @@ export function HeroSection() {
             className="mt-16"
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ delay: 0.2, duration: 0.6 }}
+            transition={{ duration: 0.6, delay: 0.2 }}
           >
-            <p className="text-sm text-muted-foreground mb-4">TRUSTED BY AI INNOVATORS AT</p>
-            <div className="flex flex-wrap items-center justify-center gap-8 opacity-70 hover:opacity-100 transition-opacity">
-              {[
-                { name: 'OpenAI', logo: '/logos/openai.svg' },
-                { name: 'Anthropic', logo: '/logos/anthropic.svg' },
-                { name: 'Stability AI', logo: '/logos/stability.svg' },
-                { name: 'Midjourney', logo: '/logos/midjourney.svg' },
-                { name: 'Hugging Face', logo: '/logos/huggingface.svg' },
-              ].map((company) => (
-                <div key={company.name} className="h-8 w-auto">
-                  <Image
-                    src={company.logo}
-                    alt={company.name}
-                    width={120}
-                    height={32}
-                    className="h-full w-auto object-contain grayscale hover:grayscale-0 transition-all"
-                  />
+            <div className="flex flex-col items-center space-y-6">
+              <div className="flex -space-x-4">
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <div 
+                    key={i}
+                    className="relative h-12 w-12 rounded-full border-2 border-background overflow-hidden"
+                    style={{ zIndex: 5 - i }}
+                  >
+                    <Image
+                      src={`/clients-social-proof/client-${i}.jpg`}
+                      alt={`Client ${i}`}
+                      fill
+                      className="object-cover"
+                    />
+                  </div>
+                ))}
+              </div>
+              <div className="flex items-center space-x-2">
+                <div className="flex">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg
+                      key={star}
+                      className="h-5 w-5 text-white"
+                      fill="currentColor"
+                      viewBox="0 0 20 20"
+                    >
+                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                    </svg>
+                  ))}
                 </div>
-              ))}
+                <span className="text-sm text-muted-foreground">
+                  Trusted by creators
+                </span>
+              </div>
             </div>
           </motion.div>
         </div>

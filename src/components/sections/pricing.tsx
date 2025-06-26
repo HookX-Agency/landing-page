@@ -3,6 +3,7 @@
 import { useRef, useState } from "react"
 import { motion, useInView, AnimatePresence } from "framer-motion"
 import { Check } from "lucide-react"
+import { ArrowRight } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
@@ -40,7 +41,7 @@ const pricingPlans = [
     popular: true,
   },
   {
-    name: "Pro",
+    name: "Pro Scale",
     description: "Designed for scaling creators and brands",
     price: 1350,
     credits: 15,
@@ -56,7 +57,7 @@ const pricingPlans = [
     popular: false,
   },
   {
-    name: "Elite",
+    name: "Elite Domination",
     description: "Best value for heavy content creators",
     price: 2700,
     credits: 30,
@@ -176,6 +177,32 @@ export function PricingSection() {
             </motion.div>
           ))}
         </div>
+
+        <motion.div 
+          className="mt-12 p-6 bg-card/50 border border-border/30 rounded-xl text-center max-w-2xl mx-auto"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <p className="text-lg mb-4">
+            <span className="mr-2">💡</span> Confused or need something custom?
+          </p>
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+            <Button 
+              variant="outline" 
+              className="group"
+              asChild
+            >
+              <a href="https://calendly.com/createhookx/30min" target="_blank" rel="noopener noreferrer">
+                Book a free strategy call
+                <ArrowRight className="ml-2 h-4 w-4 transition-transform group-hover:translate-x-1" />
+              </a>
+            </Button>
+            <p className="text-sm text-muted-foreground">
+              <span className="mr-1">💬</span> Prefer email? Reach us at <a href="mailto:banshaj@createhookx.com" className="text-primary-hookx hover:underline">growth@createhookx.com</a>
+            </p>
+          </div>
+        </motion.div>
       </div>
     </section>
   )

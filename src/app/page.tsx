@@ -1,10 +1,10 @@
 import { Navbar } from "@/components/navbar";
-import { Footer } from "@/components/footer";
+import { Footer } from "@/components/sections/footer";
 import { HeroSection } from "@/components/sections/hero";
 import { FeaturesSection } from "@/components/sections/features";
 import { ServicesSection } from "@/components/sections/services";
 import { PortfolioSection } from "@/components/sections/portfolio";
-import { TestimonialsSection } from "@/components/sections/testimonials";
+// import { TestimonialsSection } from "@/components/sections/testimonials";
 import { HowItWorks } from "@/components/sections/how-it-works";
 import { PricingSection } from "@/components/sections/pricing";
 import { FAQSection } from "@/components/sections/faq";
@@ -19,7 +19,7 @@ export default function Home() {
         <FeaturesSection />
         <ServicesSection />
         <PortfolioSection />
-        <TestimonialsSection />
+        {/* <TestimonialsSection /> */}
         <HowItWorks />
         <PricingSection />
         <FAQSection />

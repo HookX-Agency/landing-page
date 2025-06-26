@@ -38,24 +38,6 @@ export function Footer() {
           {/* Links */}
           <div className="grid grid-cols-2 md:grid-cols-3 gap-8">
             <div className="space-y-3">
-              <h3 className="text-sm font-medium">Services</h3>
-              <ul className="space-y-2 text-sm">
-                <li>
-                  <Link href="#video-editing" className="hover:text-primary-hookx transition-colors">
-                    Video Editing
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#email-marketing" className="hover:text-primary-hookx transition-colors">
-                    Email Marketing
-                  </Link>
-                </li>
-                <li>
-                  <Link href="#sms-marketing" className="hover:text-primary-hookx transition-colors">
-                    SMS Marketing
-                  </Link>
-                </li>
-              </ul>
             </div>
             <div className="space-y-3">
               <h3 className="text-sm font-medium">Company</h3>

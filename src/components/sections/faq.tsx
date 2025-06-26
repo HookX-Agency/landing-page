@@ -162,6 +162,51 @@ export function FAQSection() {
         </motion.div>
 
         <motion.div 
+          className="mt-16 bg-card/50 backdrop-blur-sm p-6 rounded-xl border border-border/50"
+          initial={{ opacity: 0, y: 20 }}
+          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
+          <h3 className="text-2xl font-bold mb-6 text-center">Credit Usage Guide</h3>
+          <div className="overflow-x-auto">
+            <table className="w-full border-collapse">
+              <thead>
+                <tr className="text-left border-b border-border/50">
+                  <th className="py-3 px-4 font-medium">Content Type</th>
+                  <th className="py-3 px-4 font-medium">Description</th>
+                  <th className="py-3 px-4 font-medium text-right">Credit Usage</th>
+                </tr>
+              </thead>
+              <tbody className="divide-y divide-border/30">
+                <tr>
+                  <td className="py-3 px-4 font-medium">Short-form Video (≤ 60 sec)</td>
+                  <td className="py-3 px-4 text-muted-foreground">Designed for Reels, Shorts, and TikToks with hooks, motion graphics, subtitles & CTA</td>
+                  <td className="py-3 px-4 font-medium text-right">1 Credit</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 font-medium">Mid-form Video (1–3 min)</td>
+                  <td className="py-3 px-4 text-muted-foreground">Ideal for tutorials, explainers, demos & carousels</td>
+                  <td className="py-3 px-4 font-medium text-right">1.5 Credits</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 font-medium">Long-form Video (3–10 min)</td>
+                  <td className="py-3 px-4 text-muted-foreground">Optimized for YouTube or course content</td>
+                  <td className="py-3 px-4 font-medium text-right">2 Credits</td>
+                </tr>
+                <tr>
+                  <td className="py-3 px-4 font-medium">Content Repurposing</td>
+                  <td className="py-3 px-4 text-muted-foreground">We convert long-form into 3 short-form clips</td>
+                  <td className="py-3 px-4 font-medium text-right">2 Credits</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <p className="text-sm text-muted-foreground mt-4 text-center">
+            Need help choosing the right package? <a href="mailto:banshaj@createhookx.com" className="text-primary-hookx hover:underline">Contact us</a> for a consultation.
+          </p>
+        </motion.div>
+
+        <motion.div 
           className="mt-16 text-center"
           initial={{ opacity: 0, y: 20 }}
           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}

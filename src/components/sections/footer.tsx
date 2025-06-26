@@ -37,9 +37,7 @@ export function Footer() {
       },
     ],
     legal: [
-      { name: 'Privacy Policy', href: '/privacy' },
-      { name: 'Terms of Service', href: '/terms' },
-      { name: 'Cookie Policy', href: '/cookies' },
+      { name: 'Privacy Policy', href: '/privacy-policy' }
     ]
   }
 
@@ -56,7 +54,7 @@ export function Footer() {
                 AI Edition
               </span>
             </div>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-foreground">
               Helping AI creators and companies transform their content into high-converting video experiences.
             </p>
             <div className="flex space-x-4">
@@ -79,13 +77,13 @@ export function Footer() {
             <h3 className="text-sm font-semibold text-foreground tracking-wider uppercase">Services</h3>
             <ul className="mt-4 space-y-2">
               <li>
-                <Link href="/services#ai-educators" className="text-sm text-muted-foreground hover:text-primary-hookx transition-colors flex items-center group">
+                <Link href="#services" className="text-sm text-muted-foreground hover:text-primary-hookx transition-colors flex items-center group">
                   For AI Educators
                   <ArrowUpRight className="ml-1 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>
               </li>
               <li>
-                <Link href="/services#ai-products" className="text-sm text-muted-foreground hover:text-primary-hookx transition-colors flex items-center group">
+                <Link href="#services" className="text-sm text-muted-foreground hover:text-primary-hookx transition-colors flex items-center group">
                   For AI Product Companies
                   <ArrowUpRight className="ml-1 h-3 w-3 opacity-0 group-hover:opacity-100 transition-opacity" />
                 </Link>

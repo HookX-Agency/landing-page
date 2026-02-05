@@ -167,10 +167,10 @@ const HeroSection = () => {
           Retention Architecture for eCommerce
         </div>
 
-        <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold leading-tight mb-8 tracking-tight">
-          Stop Paying Full Price <br />
+        <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold leading-tight mb-8 tracking-tight">
+          Stop Renting Your Traffic. <br />
           <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-500 to-indigo-500">
-            For Every Sale.
+            Own Your Audience.
           </span>
         </h1>
 
@@ -237,7 +237,7 @@ const ProblemCalculator = () => {
               <div>
                 <h4 className="font-bold text-red-400 mb-1">Reality Check</h4>
                 <p className="text-sm text-red-200/60">
-                  Customers buy once. Then silence.
+                  Acquisition gets them to the door. Retention invites them in.
                 </p>
               </div>
             </div>
@@ -450,6 +450,17 @@ const ShowcaseMarquee = () => {
     { img: "https://placehold.co/600x1200/18181b/3b82f6?text=Coming+Soon", brand: "Your Brand Here" },
   ];
 
+  const [selectedDesign, setSelectedDesign] = useState(null);
+
+  // Lock scroll when modal is open
+  useEffect(() => {
+    if (selectedDesign) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+  }, [selectedDesign]);
+
   return (
     <section className="py-24 bg-zinc-950 relative border-t border-zinc-900">
       <div className="max-w-7xl mx-auto px-6 mb-16">
@@ -460,15 +471,51 @@ const ShowcaseMarquee = () => {
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {designs.map((design, idx) => (
-            <DesignCard key={idx} {...design} />
+            <DesignCard
+              key={idx}
+              {...design}
+              onView={() => setSelectedDesign(design)}
+            />
           ))}
         </div>
       </div>
+
+      {/* Full Screen Design Modal */}
+      {selectedDesign && (
+        <div
+          className="fixed inset-0 z-[100] bg-black/90 flex flex-col items-center justify-center p-4 backdrop-blur-md animate-fadeIn"
+          onClick={() => setSelectedDesign(null)}
+        >
+          {/* Close Button */}
+          <button
+            className="absolute top-8 right-8 text-white/50 hover:text-white p-2 rounded-full hover:bg-white/10 transition-colors"
+            onClick={() => setSelectedDesign(null)}
+          >
+            <X className="w-8 h-8" />
+          </button>
+
+          {/* Image Container with Scroll for long designs */}
+          <div
+            className="w-full max-w-2xl max-h-[85vh] overflow-y-auto rounded-xl shadow-2xl relative scrollbar-hide bg-zinc-900"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <img
+              src={selectedDesign.img}
+              alt={selectedDesign.brand}
+              className="w-full h-auto block"
+            />
+          </div>
+
+          <div className="mt-4 text-zinc-400 font-mono text-sm uppercase tracking-widest">
+            {selectedDesign.brand}
+          </div>
+        </div>
+      )}
     </section>
   );
 };
 
-const DesignCard = ({ img, brand }) => {
+const DesignCard = ({ img, brand, onView }) => {
   return (
     <div className="flex flex-col items-center gap-6 group">
       <div className="w-[75%] relative aspect-[1/2] rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-900 group-hover:border-blue-500/50 transition-all duration-500">
@@ -477,20 +524,23 @@ const DesignCard = ({ img, brand }) => {
           {/* Render same image twice for seamless loop */}
           <img
             src={img}
-            alt={brand}
+            alt={`${brand} Email Marketing Campaign Design`}
             className="w-full h-auto object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
           />
           <img
             src={img}
-            alt={brand}
+            alt={`${brand} Email Marketing Campaign Design`}
             className="w-full h-auto object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
           />
         </div>
 
         {/* Hover Overlay - View Case Study Button */}
         <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto">
-          <button className="px-6 py-2 bg-white text-black font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:bg-blue-600 hover:text-white hover:scale-105 text-xs">
-            View Case Study
+          <button
+            onClick={onView}
+            className="px-6 py-2 bg-white text-black font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:bg-blue-600 hover:text-white hover:scale-105 text-xs"
+          >
+            View Full Design
           </button>
         </div>
       </div>

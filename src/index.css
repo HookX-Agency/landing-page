@@ -1,1 +1,16 @@
 @import "tailwindcss";
+
+@theme {
+    --color-primary: #3b82f6;
+}
+
+@layer base {
+    body {
+        cursor: none;
+    }
+
+    a,
+    button {
+        cursor: none;
+    }
+}

@@ -1,5 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Mail, ArrowRight, TrendingUp, AlertCircle, CheckCircle, Bell, DollarSign, X, Menu, ChevronRight, MousePointer2, Calendar, ShieldCheck } from 'lucide-react';
+import vantageImg from './assets/vantage.jpg';
+import apexImg from './assets/apex.jpg';
+import CustomCursor from './CustomCursor';
 
 const HookXApp = () => {
   const [viewState, setViewState] = useState('hook'); // 'hook', 'reveal', 'website'
@@ -9,11 +12,17 @@ const HookXApp = () => {
   const handleEnterClick = () => setViewState('website');
 
   if (viewState === 'website') {
-    return <MainWebsite />;
+    return (
+      <>
+        <CustomCursor />
+        <MainWebsite />
+      </>
+    );
   }
 
   return (
     <div className="fixed inset-0 bg-black text-white flex items-center justify-center font-sans overflow-hidden">
+      <CustomCursor />
       {/* Background Ambience - Blue */}
       <div className="absolute inset-0 opacity-30 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-blue-900/40 via-black to-black"></div>
 
@@ -114,7 +123,7 @@ const MainWebsite = () => {
       <QualificationSection />
       <ClosingReinforcement />
       <SalesDiagnosisSection />
-      <FinalCTA />
+
       <Footer />
     </div>
   );
@@ -436,12 +445,9 @@ const ShowcaseMarquee = () => {
   // 2. Replace the placeholder URLs below with your actual image URLs.
   // ----------------------------------------------------------------------------------
   const designs = [
-    "https://placehold.co/600x1200/18181b/3b82f6?text=Email+Design+1",
-    "https://placehold.co/600x1200/18181b/8b5cf6?text=Email+Design+2",
-    "https://placehold.co/600x1200/18181b/10b981?text=Email+Design+3",
-    "https://placehold.co/600x1200/18181b/f43f5e?text=Email+Design+4",
-    "https://placehold.co/600x1200/18181b/f59e0b?text=Email+Design+5",
-    "https://placehold.co/600x1200/18181b/ec4899?text=Email+Design+6",
+    { img: vantageImg, brand: "Vantage Athletics" },
+    { img: apexImg, brand: "Apex Grooming" },
+    { img: "https://placehold.co/600x1200/18181b/3b82f6?text=Coming+Soon", brand: "Your Brand Here" },
   ];
 
   return (
@@ -453,8 +459,8 @@ const ShowcaseMarquee = () => {
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {designs.map((img, idx) => (
-            <DesignCard key={idx} img={img} />
+          {designs.map((design, idx) => (
+            <DesignCard key={idx} {...design} />
           ))}
         </div>
       </div>
@@ -462,22 +468,50 @@ const ShowcaseMarquee = () => {
   );
 };
 
-const DesignCard = ({ img }) => {
+const DesignCard = ({ img, brand }) => {
   return (
-    <div className="relative aspect-[1/2] rounded-2xl overflow-hidden border border-zinc-800 group shadow-2xl bg-zinc-900 hover:border-blue-500/50 transition-all duration-500">
-      {/* Image Container */}
-      <img
-        src={img}
-        alt="Email Design"
-        className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105 opacity-80 group-hover:opacity-100"
-      />
+    <div className="flex flex-col items-center gap-6 group">
+      <div className="w-[75%] relative aspect-[1/2] rounded-2xl overflow-hidden border border-zinc-800 shadow-2xl bg-zinc-900 group-hover:border-blue-500/50 transition-all duration-500">
+        {/* Infinite Scroll Container */}
+        <div className="absolute inset-x-0 w-full animate-infinite-scroll flex flex-col hover:pause-scroll">
+          {/* Render same image twice for seamless loop */}
+          <img
+            src={img}
+            alt={brand}
+            className="w-full h-auto object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+          />
+          <img
+            src={img}
+            alt={brand}
+            className="w-full h-auto object-cover opacity-80 group-hover:opacity-100 transition-opacity duration-300"
+          />
+        </div>
 
-      {/* Hover Overlay */}
-      <div className="absolute inset-0 bg-black/80 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-sm">
-        <button className="px-8 py-3 bg-white text-black font-bold rounded-full transform translate-y-8 group-hover:translate-y-0 transition-all duration-500 hover:bg-blue-600 hover:text-white hover:scale-105">
-          View Case Study
-        </button>
+        {/* Hover Overlay - View Case Study Button */}
+        <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto">
+          <button className="px-6 py-2 bg-white text-black font-bold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-500 hover:bg-blue-600 hover:text-white hover:scale-105 text-xs">
+            View Case Study
+          </button>
+        </div>
       </div>
+
+      {/* Brand Name Label - Outside */}
+      <div className="text-zinc-400 font-bold text-sm tracking-widest uppercase group-hover:text-blue-400 transition-colors">
+        {brand}
+      </div>
+
+      <style>{`
+        @keyframes infinite-scroll {
+          0% { transform: translateY(0); }
+          100% { transform: translateY(-50%); }
+        }
+        .animate-infinite-scroll {
+          animation: infinite-scroll 10s linear infinite;
+        }
+        .animate-infinite-scroll:hover {
+          animation-play-state: paused;
+        }
+      `}</style>
     </div>
   );
 }
@@ -799,19 +833,7 @@ const SalesDiagnosisSection = () => (
   </section>
 );
 
-const FinalCTA = () => (
-  <section className="py-20 px-6 bg-black text-center">
-    <div className="max-w-4xl mx-auto">
-      <h2 className="text-3xl md:text-5xl font-bold mb-8">Own Your Audience.</h2>
-      <button
-        onClick={handleBooking}
-        className="px-10 py-4 border border-zinc-700 rounded-full font-bold text-lg hover:bg-white hover:text-black transition-all"
-      >
-        Start My Audit
-      </button>
-    </div>
-  </section>
-);
+
 
 const Footer = () => (
   <footer className="bg-black border-t border-zinc-900 py-16 px-6">
